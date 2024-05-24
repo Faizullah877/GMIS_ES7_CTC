@@ -9,7 +9,8 @@ function report = encode_decode_VVC_VVenC(input)
         
         encoder_exe = fullfile(input.codec_folder, "VVC_VVenC", "vvencFFapp.exe");
 
-        input_yuv_video = input.input_raw;
+        input_yuv_video = fullfile(input.input_raw, sprintf("%s_%dx%dx%d_1Hz_prec10_P420.yuv", set_name, no_cols,no_rows, no_of_images)); % file naming format is followed in conversion.
+        % input_yuv_video = input.input_raw;
         bin_video_file = fullfile(input.compressed_folder, sprintf("%s.266", set_name));
         rnd_cfg_file = fullfile(input.codec_folder, "VVC_VVenC/cfg/randomaccess_slow.cfg");
         seq_cfg_file = fullfile(input.codec_folder, "VVC_VVenC/cfg/sequence.cfg");
@@ -17,7 +18,7 @@ function report = encode_decode_VVC_VVenC(input)
         if(strcmp(input.config, "inter"))
             enc_cmd = sprintf("%s --preset=slow -c %s -c %s -q %d --InputFile %s -s %dx%d --InputBitDepth 10 --FramesToBeEncoded %d --BitstreamFile %s --InputChromaFormat 420 --MinSearchWindow 1 --framerate 30", encoder_exe, rnd_cfg_file, seq_cfg_file, q_v, input_yuv_video, no_cols, no_rows, no_of_images, bin_video_file);
         else  
-            enc_cmd = sprintf("%s --preset=slow -c %s -c %s -q %d --InputFile %s -s %dx%d --InputBitDepth 10 --FramesToBeEncoded %d --BitstreamFile %s --InputChromaFormat 420 --framerate 30 --IntraPeriod 1", encoder_exe, rnd_cfg_file, seq_cfg_file, q_v, input_yuv_video, no_cols, no_rows, no_of_images, bin_video_file);            
+            enc_cmd = sprintf("%s --preset=slow -c %s -c %s -q %d --InputFile %s -s %dx%d --InputBitDepth 10 --FramesToBeEncoded %d --BitstreamFile %s --InputChromaFormat 420 --framerate 30 --IntraPeriod=1", encoder_exe, rnd_cfg_file, seq_cfg_file, q_v, input_yuv_video, no_cols, no_rows, no_of_images, bin_video_file);            
         end
 
 

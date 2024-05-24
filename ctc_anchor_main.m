@@ -17,18 +17,23 @@ exp_params.experiment_folder = "D:\GMIS_EXPs\Test_CTC";
 exp_params.results_mat_fname = 'Metrics.mat';
 exp_params.QA_Metrics = ["PSNR_Y", "PSNR_YUV", "PSNR_HVS_M_Y", "MSSSIM_Y"];
 
-convert_dataset = true;
-
+% Anchors_parameters Cell formats
+% 1st cell = Anchor Name
+% 2nd cell = Quality params array
+% 3rd cell = Raw File format for Anchor, a directory with the cell value will be created in [experiment_folder/set_folder/ground_truth] folder
+% 4th cell = Is Raw in required format exists or not. if not then the software will generate with same name as 3 cell inside the experiment_folder/set_name/GroundTruth/3Parameter. 
 exp_params.Anchors_parameters = {...
-    % {'JPEG1', [15, 20, 30, 40], "PPM", true}... %[7, 20, 40, 60, 80, 85]
-    % {'JPEG1_Arithmetic', [10, 25, 15, 35, 45], "PPM", convert_dataset}... %[7, 20, 40, 60, 80, 85]
-    % {'SJU_Arch_DPCM_QDCT', [10, 25, 50, 75, 90, 95], "JPEG-YCbCr"}... %[10, 30, 50, 70, 85]
-    % {'JPEG2000', [10, 25, 35, 50], "PPM", convert_dataset}... %[7, 20, 40, 60, 80, 85]
-    % {'JPEGXL', [10, 25, 35, 50], "PPM", convert_dataset}.... %[10, 30, 50, 70, 85, 90]
-    % {'VVC_VVenC_Inter', [50, 35, 25, 20], "yuv420p10le", true}... %[50, 35, 30, 25, 20, 15, 10, 5],
-    % {'VVC_VVenC_Intra', [50, 35, 30, 25], "yuv420p10le", true}... % [50, 35, 30, 25, 20, 15, 10, 5]
-    % {'VVC_VTM_Inter', [50, 35], "yuv420p10le", true}... % [50, 35, 25, 20, 15, 12, 10, 8]
+    {'JPEG1', [15, 20, 30, 40], "PPM", false}... %[7, 20, 40, 60, 80, 85]
+    {'JPEG1_Arithmetic', [10, 25, 15], "PPM", true}... %[7, 20, 40, 60, 80, 85]
+    {'JPEG2000', [10, 25, 35], "PPM", true}... %[7, 20, 40, 60, 80, 85]
+    {'JPEGXL', [10, 25, 35, 50], "PPM", true}... %[10, 30, 50, 70, 85, 90]
+    {'VVC_VVenC_Inter', [50, 35, 25,], "yuv420p10le", false}... %[50, 35, 30, 25, 20, 15, 10, 5],
+    {'VVC_VVenC_Intra', [50, 35, 30], "yuv420p10le", true}... % [50, 35, 30, 25, 20, 15, 10, 5]
+    {'VVC_VTM_Inter', [50, 35], "yuv420p10le", true}... % [50, 35, 25, 20, 15, 12, 10, 8]
     {'VVC_VTM_Intra', [50, 35], "yuv420p10le", true}... % [50, 35, 25, 20, 15, 13, 11, 9]
+    {'H264_AVC', [25, 30, 35], "PPM", true}...
+    {'H264_AVCintra', [25, 30, 35], "PPM", true}...
+    % {'SJU_Arch_DPCM_QDCT', [10, 25, 50, 75, 90, 95], "JPEG-YCbCr"}... %[10, 30, 50, 70, 85]
 %         {'JPEG1arith_rdopt', [0.15, 0.30, 0.50, 0.75, 0.80, 0.90, 1.0]}...
 %         {'JPEG1huff_rdopt', [0.15, 0.30, 0.50, 0.75, 0.80, 0.90, 1.0]}...
 %         {'SJU_Arch_DPCM_PIXs_rdopt1', [0.15, 0.30, 0.50, 0.8, 1.0], "JPEG-YCbCr"}...
@@ -36,8 +41,6 @@ exp_params.Anchors_parameters = {...
 %         {'UNSW_SJU_JPEG1arith_rdopt_v4', [0.15, 0.30, 0.50], "JPEG-YCbCr"}...
 %         {'UNSW_SJU_JPEG1arith_v4', [7, 20, 40, 60, 80, 85], "JPEG-YCbCr"}...
 %           {'SJU_Arch_JPEG1arith_rdopt1', [0.15, 0.30, 0.50], "PPM"}...
-    % {'H264_AVC', [25, 30], "*.tiff"};
-%     {'H264_AVCintra', [25, 30], 'PPM'}
     };
 
 exp_params.do_discard = false;
@@ -56,6 +59,13 @@ else
     M=struct();
 end
 
+if ~exist(fullfile(exp_params.dir_struct.set_data_folder, 'dataset_info.mat'), 'file')
+    dataset_info = get_dataset_info(exp_params.set_path, exp_params.set_name, exp_params.images_files_ext);
+    save(fullfile(exp_params.dir_struct.set_data_folder, 'dataset_info.mat'), 'dataset_info');
+else
+    load(fullfile(exp_params.dir_struct.set_data_folder, 'dataset_info.mat'));
+end
+exp_params.set_info = dataset_info;
 
 
 %% loop through each anchor
@@ -63,6 +73,12 @@ no_of_anchors = numel(exp_params.Anchors_parameters);
 
 for ancNo = 1:no_of_anchors
     anch_P = exp_params.Anchors_parameters{ancNo}; 
+    
+    if ~anch_P{4}
+        data_format = anch_P{3};
+        exp_params = convert_dataset_fileformat(exp_params, data_format);
+    end
+
     M = compression_pipeline_v2(exp_params, anch_P, M);
     save(fullfile(exp_params.dir_struct.results_folders, exp_params.results_mat_fname), 'M');
 end

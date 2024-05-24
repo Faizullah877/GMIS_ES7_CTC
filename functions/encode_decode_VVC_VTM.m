@@ -9,17 +9,18 @@ function report = encode_decode_VVC_VTM(input)
         
         encoder_exe = fullfile(input.codec_folder, "VVC_VTM", "EncoderApp.exe");
 
-        input_yuv_video = input.input_raw;
-        bin_video_file = fullfile(input.compressed_folder, sprintf("%s.266", set_name));
+        input_yuv_video = fullfile(input.input_raw, sprintf("%s_%dx%dx%d_1Hz_prec10_P420.yuv", set_name, no_cols,no_rows, no_of_images)); % file naming format is followed in conversion.
+        % input_yuv_video = input.input_raw;
+        bin_video_file = fullfile(input.compressed_folder, sprintf("%s.bin", set_name));
         decoded_video_yuv = fullfile(input.decompressed_folder, sprintf("Rec_%s.yuv", set_name));
 
 
         if strcmp(input.config, "inter")
             cfg_file = fullfile(input.codec_folder, "VVC_VTM","cfg", "encoder_randomaccess_vtm.cfg");
-            enc_cmd =sprintf('%s -c %s -i %s -wdt %d -hgt %d -b %s -f %d -fr 30 -q %d --InputBitDepth=10 --InputChromaFormat=420 --ChromaFormatIDC=420 --TemporalSubsampleRatio=1 --ConformanceWindowMode=1 --MinSearchWindow 1 -o %s', encoder_exe, cfg_file, input_yuv_video, no_cols, no_rows, bin_video_file, no_of_images, q_v, decoded_video_yuv);
+            enc_cmd =sprintf('%s -c %s -i %s -wdt %d -hgt %d -b %s -f %d -fr 30 -q %d --InputBitDepth=10 --InputChromaFormat=420 --ChromaFormatIDC=420 --TemporalSubsampleRatio=1 --ConformanceWindowMode=1 --MinSearchWindow=1 -o %s', encoder_exe, cfg_file, input_yuv_video, no_cols, no_rows, bin_video_file, no_of_images, q_v, decoded_video_yuv);
         else
             cfg_file = fullfile(dir_struct.codec_folder, "VVC_VTM","cfg", "encoder_intra_vtm.cfg");
-            enc_cmd =sprintf('%s -c %s -i %s -wdt %d -hgt %d -b %s -f %d -fr 30 -q %d --InputBitDepth=10 --InputChromaFormat=420 --ChromaFormatIDC=420 --TemporalSubsampleRatio=1 --ConformanceWindowMode=1 --IntraPeriod 1 -o %s', encoder_exe, cfg_file, input_yuv_video, no_cols, no_rows, bin_video_file, no_of_images, q_v, decoded_video_yuv);
+            enc_cmd =sprintf('%s -c %s -i %s -wdt %d -hgt %d -b %s -f %d -fr 30 -q %d --InputBitDepth=10 --InputChromaFormat=420 --ChromaFormatIDC=420 --TemporalSubsampleRatio=1 --ConformanceWindowMode=1 --IntraPeriod=1 -o %s', encoder_exe, cfg_file, input_yuv_video, no_cols, no_rows, bin_video_file, no_of_images, q_v, decoded_video_yuv);
         end
   
         tCstartimg= tic;

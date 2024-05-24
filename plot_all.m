@@ -1,10 +1,10 @@
 clc
 % clear all
 
-M_file = "D:\VTM_VVenC_eval\Results\Metrics.mat";
-plot_all_codecs = false;
+M_file = "D:\GMIS_EXPs\Test_CTC\Results\Metrics.mat";
+plot_all_codecs = true;
 
-figures_folder = "D:\VTM_VVenC_eval\Results\Plots";
+figures_folder = "D:\GMIS_EXPs\Test_CTC\Results\Plots";
 if(~exist(figures_folder, 'dir')), mkdir(figures_folder); end
 
 load(M_file);
@@ -25,7 +25,7 @@ plot_metrics = [ "PSNR_Y", "PSNR_YUV", "PSNR_HVS_M_Y", "MSSSIM_Y"];
 % plot_metrics = ["PSNR_RGB", "PSNR_Y",  "PSNR_HVS_M_Y", "MSSSIM_RGB"];
 
 if(plot_all_codecs)
-    plot_codecs = fieldnames(M.(set_name));
+    plot_codecs = string(fieldnames(M.(set_name)));
 else
     % plot_codecs = ["JPEG1", "JPEG1_Arithmetic", "JPEG2000", "JPEGXL", "VVC_VVenC_Inter", "VVC_VVenC_Intra"];
     plot_codecs = ["JPEG2000", "JPEGXL", "VVC_VTM_Inter", "VVC_VTM_Intra", "VVC_VVenC_Inter", "VVC_VVenC_Intra"];

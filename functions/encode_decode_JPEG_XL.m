@@ -6,7 +6,7 @@ no_of_images = input.no_of_images;
 encoder_exe = fullfile(input.codec_folder, "JPEG_XL", "cjxl.exe");
 decoder_exe = fullfile(input.codec_folder, "JPEG_XL", "djxl.exe");
 
-raw_files = dir(fullfile(input.input_raw, input.input_raw_fileEXT));
+raw_files = dir(fullfile(input.input_raw, "*.ppm"));
 
 ImagesResult_T1 = table('Size', [no_of_images 8], 'VariableTypes', {'uint16', 'string','uint16', 'uint16', 'double', 'single', 'double','double'});
 ImagesResult_T1.Properties.VariableNames = {'ImageNo','ImageName', 'ImageWidth', 'ImageHeight', 'CompressedImageSize','bpp', 'enc_time', 'dec_time'};

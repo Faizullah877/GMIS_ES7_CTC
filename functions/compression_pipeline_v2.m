@@ -1,41 +1,26 @@
 function M = compression_pipeline_v2(exp_params, codec_params, M)
     %COMPRESSION_PIPELINE Summary of this function goes here
     %   Detailed explanation goes here
+
+    %general parameters
     set_name = exp_params.set_name;
     QA_metrics = exp_params.QA_Metrics;
-    do_discard = exp_params.do_discard;
-    
-    codec_exp_time = tic;
-    
+    do_discard = exp_params.do_discard;   
+    codec_exp_time = tic;    
     codec = codec_params{1};
     q_list = codec_params{2};
-    codec_in_file_format = codec_params{3};
-    dataset_convert = codec_params{4};
-    
-    no_of_QAmetrics = numel(QA_metrics);
-    
+    data_format = codec_params{3};   
+    no_of_QAmetrics = numel(QA_metrics);    
     quality_count = numel(q_list);
-    
-    
-    
-    %% Data conversion
-    if dataset_convert
-        if(strcmp(codec, "VVC_VVenC_Inter") || strcmp(codec, "VVC_VVenC_Intra") ||codec == "VVC_VTM_Inter" || codec == "VVC_VTM_Intra")
-            exp_params = convertDataset_to_video(exp_params, codec_in_file_format);
-        else
-            exp_params = convert_dataset(exp_params, codec_in_file_format);
-        end
-    end
-    dir_struct = exp_params.dir_struct;
-    
-    no_of_images = exp_params.no_of_images;
-    
+    dir_struct = exp_params.dir_struct;  
+    no_of_images = exp_params.set_info.no_of_images;    
     set_codec_results = struct();
+
+    % codec data folder
     codec_data_folder = fullfile(dir_struct.set_data_folder, codec);
-    if(~exist(codec_data_folder, 'dir')), mkdir(codec_data_folder); end
+    if(~exist(codec_data_folder, 'dir')), mkdir(codec_data_folder); end    
     
-    orig_files = dir(fullfile(exp_params.set_path, exp_params.images_files_ext));
-    
+    % check for existing average results table for a set.
     if isfield(M, set_name) && isfield(M.(set_name), codec) &&  isfield(M.(set_name).(codec), "SET_AVG_RESULTS")
         set_avg_results = M.(set_name).(codec).SET_AVG_RESULTS;
         append_row = true;
@@ -46,18 +31,14 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
         append_row = false;
     end
     
-    
-    images_names = strings(1,no_of_images);
-    for i =1:no_of_images
-        images_names(1, i) = orig_files(i).name;
-    end
-    
-    
+
     %% Iterate over rate/q values
     for q_itr = 1: quality_count
         q_v = q_list(q_itr);
         q_fieldName = ['q_' num2str(q_v)];
         q_fieldName = strrep(q_fieldName, ".", "p");
+
+        % check and skip if the data for the q value is already there.
         if isfield(M, set_name)
             if isfield(M.(set_name), codec)
                 if isfield(M.(set_name).(codec).q_fields, q_fieldName)
@@ -68,35 +49,31 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
             end
         end
     
+        % create the folders for the compressed and decompressed data.
         set_q_folder = fullfile(codec_data_folder, q_fieldName);
         if(~exist(set_q_folder, 'dir')), mkdir(set_q_folder); end
-    
         set_compressed_folder = fullfile(set_q_folder, "Compressed");
         if(~exist(set_compressed_folder, 'dir')), mkdir(set_compressed_folder); end
         set_dec_folder = fullfile(set_q_folder, "Decompressed");
         if(~exist(set_dec_folder, 'dir')), mkdir(set_dec_folder); end
-    
-    
-        input_orig = fullfile(orig_files(1).folder, orig_files(1).name);
-        Orig_IMG = imread(input_orig);
-        [no_rows, no_cols, ~] = size(Orig_IMG);
-    
+
+        % necessary variables for codec and results
+        no_rows = exp_params.set_info.images_details.img_height(1);
+        no_cols = exp_params.set_info.images_details.img_width(1);
         ImagesResult_T1 = table('Size', [no_of_images 8], 'VariableTypes', {'uint16', 'string','uint16', 'uint16', 'double', 'single', 'double','double'});
-        ImagesResult_T1.Properties.VariableNames = {'ImageNo','ImageName', 'ImageWidth', 'ImageHeight', 'CompressedImageSize','bpp', 'enc_time', 'dec_time'};
+        ImagesResult_T1.Properties.VariableNames = {'ImageNo','ImageName', 'ImageWidth', 'ImageHeight', 'CompressedImageSize','bpp', 'enc_time', 'dec_time'};    
+        Images_IQA_T = double(zeros([no_of_images no_of_QAmetrics])); 
     
-        Images_IQA_T = double(zeros([no_of_images no_of_QAmetrics])); % table('Size', [no_of_images, no_of_QAmetrics], 'VariableTypes', );
-    
-    
+        % input structure contain data for codec
         input = struct();
         input.set_name = set_name;
         input.codec_folder = dir_struct.codec_folder;
-        input.input_raw = dir_struct.input_raw;
-        input.input_raw_fileEXT = dir_struct.input_raw_fileEXT;
+        input.input_raw = fullfile(dir_struct.ground_truth, data_format);
         input.compressed_folder = set_compressed_folder;
         input.decompressed_folder = set_dec_folder;
         input.q_value = q_v;
-        input.width = no_cols;
-        input.height = no_rows;
+        input.width = exp_params.set_info.images_details.img_width(1);
+        input.height = exp_params.set_info.images_details.img_height(1);
         input.no_of_images = no_of_images;
     
         fprintf("\tStart Time: %s.\n", get_current_time_str());
@@ -147,7 +124,7 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
         eval_set_start_time = tic;
         textprogressbar('        => Evaluating : ');
         for imgNo=1:no_of_images
-            input_raw = fullfile(orig_files(imgNo).folder, orig_files(imgNo).name);
+            input_raw = fullfile(exp_params.set_info.set_path, exp_params.set_info.images_details.img_names(imgNo));
             Orig_IMG = imread(input_raw);
             [no_rows, no_cols, ~] = size(Orig_IMG);
             [~, image_name, ~] = fileparts(input_raw);
@@ -160,9 +137,7 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
                 img_enc_time = codec_report.set_enc_time/no_of_images;
                 img_dec_time = codec_report.set_dec_time/no_of_images;
                 ImagesResult_T1(imgNo,:) ={imgNo, image_name, no_cols, no_rows, compressed_img_size, img_bpp, img_enc_time, img_dec_time};
-                % ImagesResult_T1(imgNo,:) ={set_name, imgNo, image_name, no_cols, no_rows, no_rows*no_cols, codec, q_v, compressed_img_size, img_bpp, img_enc_time, img_dec_time};
             end
-            % Images_IQA_T = vertcat(Images_IQA_T, struct2table(image_IQA_values));
             tmp = struct2cell(image_IQA_values);
             v = [tmp{:}];
             Images_IQA_T(imgNo,:) = v;
@@ -196,7 +171,7 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
     
         M.(set_name).(codec).SET_AVG_RESULTS = sortrows(set_avg_results, "SET_BPP");
         M.(set_name).(codec).RATE_VALUES = q_list;
-        M.(set_name).(codec).IMAGES_NAMES = images_names;
+        M.(set_name).(codec).IMAGES_NAMES = exp_params.set_info.images_details.img_names;
     
         save(fullfile(exp_params.dir_struct.results_folders, exp_params.results_mat_fname), 'M');
     
@@ -326,165 +301,3 @@ detailed_results.METRICS = metric_results;
 
 end
 
-function exp_params = convert_dataset(exp_params, codec_in_file_format)
-orig_ext = exp_params.images_files_ext;
-original_images_list = dir(fullfile(exp_params.set_path, orig_ext));
-no_of_images = numel(original_images_list);
-exp_params.no_of_images = no_of_images;
-orig_ext = extractAfter(orig_ext,1);
-dir_struct = exp_params.dir_struct;
-tCstart = tic;
-if strcmp(codec_in_file_format, "PPM")
-    ppm_folder = fullfile(dir_struct.ground_truth, codec_in_file_format);
-    dir_struct.set_ppm_path = ppm_folder;
-    dir_struct.input_raw = ppm_folder;
-    if(~exist(ppm_folder, 'dir')), mkdir(ppm_folder); end
-    textprogressbar('=> Conversion to PPM : ');
-    for img=1:no_of_images
-        rgb_image = original_images_list(img).name;
-        ppm_name = strrep(rgb_image, orig_ext, ".ppm");
-        IMG = imread(fullfile(original_images_list(img).folder, original_images_list(img).name));
-        imwrite(IMG, fullfile(ppm_folder, ppm_name));
-        textprogressbar(img/no_of_images*100);
-    end
-    dir_struct.input_raw_fileEXT = "*.ppm";
-    conversion_time = toc(tCstart);
-    textprogressbar(['   Conversion done in  ' num2str(conversion_time) ' sec']);
-    fprintf("\n");
-
-elseif strcmp(codec_in_file_format, "yuv444p10le")
-    orig_yuv_folder = fullfile(dir_struct.ground_truth, codec_in_file_format);
-    if(~exist(orig_yuv_folder, 'dir')), mkdir(orig_yuv_folder); end
-    dir_struct.set_yuv444p_path = orig_yuv_folder;
-    dir_struct.input_raw = orig_yuv_folder;
-    textprogressbar('  => Converting to yuv444p10le : ');
-    for img=1:no_of_images
-        input_file = fullfile(original_images_list(img).folder, original_images_list(img).name);
-        rgb_img = imread(input_file);
-        [he, we, ce] = size(rgb_img);
-        output_file = fullfile(orig_yuv_folder, sprintf("image_%03d_%dx%d_1Hz_prec10_P444.yuv", img, we,he));
-        cmd = sprintf("ffmpeg -hide_banner -i %s -pix_fmt yuv444p10le -vf scale=in_range=full:in_color_matrix=bt709:out_range=full:out_color_matrix=bt709 -color_primaries bt709  -color_trc bt709 -colorspace bt709 -y %s", input_file, output_file);
-        [status, out1] = system(cmd);
-        textprogressbar(img/no_of_images*100);
-    end
-    dir_struct.input_raw_fileEXT = "*.yuv";
-    conversion_time = toc(tCstart);
-    textprogressbar(['   Conversion done in  ' num2str(conversion_time) ' sec']);
-    fprintf("\n");
-
-elseif strcmp(codec_in_file_format, "JPEG-YCbCr")
-    orig_ycbcr_folder = fullfile(dir_struct.ground_truth, "JPEG_YCbCr");
-    if(~exist(orig_ycbcr_folder, 'dir')), mkdir(orig_ycbcr_folder); end
-    dir_struct.set_jpeg_ycbcr_path = orig_ycbcr_folder;
-    dir_struct.input_raw = orig_ycbcr_folder;
-    textprogressbar('  => Converting to JPEG-YCbCr : ');
-    for img=1:no_of_images
-        rgb_img = imread(fullfile(original_images_list(img).folder, original_images_list(img).name));
-        [he, we, ce] = size(rgb_img);
-        ycbcr_img = rgb2jpegycbcr(rgb_img);
-        sju_imwrite_yuv(ycbcr_img, fullfile(orig_ycbcr_folder, sprintf("image_%03d_%dx%d_1Hz_prec8_P444.yuv", img, we,he)));
-        textprogressbar(img/no_of_images*100);
-    end
-    dir_struct.input_raw_fileEXT = "*.yuv";
-    conversion_time = toc(tCstart);
-    textprogressbar(['   Conversion done in  ' num2str(conversion_time) ' sec']);
-    fprintf("\n");
-else
-    dir_struct.input_raw = dir_struct.set_path;
-    dir_struct.input_raw_fileEXT = codec_in_file_format;
-end
-
-exp_params.dir_struct = dir_struct;
-end
-
-
-function exp_params = convertDataset_to_video(exp_params, codec_in_file_format)
-
-tCstart = tic;
-orig_ext = exp_params.images_files_ext;
-original_images_list = dir(fullfile(exp_params.set_path, orig_ext));
-no_of_images = numel(original_images_list);
-exp_params.no_of_images = no_of_images;
-dir_struct = exp_params.dir_struct;
-
-orig_yuv_folder = fullfile(dir_struct.ground_truth, codec_in_file_format);
-if(~exist(orig_yuv_folder, 'dir')), mkdir(orig_yuv_folder); end
-dir_struct.video_yuv444p_path = orig_yuv_folder;
-
-input_file = fullfile(original_images_list(1).folder, original_images_list(1).name);
-
-[~, image_name, ~] = fileparts(original_images_list(1).name);
-input =fullfile(exp_params.set_path, erase(image_name,"001")+"%03d.tiff");
-
-% input =erase(input_file,"001")+"%03d.ppm";
-
-rgb_img = imread(input_file);
-[he, we, ce] = size(rgb_img);
-if codec_in_file_format == "yuv444p10le"
-    output_file = fullfile(orig_yuv_folder, sprintf("%s_%dx%dx%d_1Hz_prec10_P444.yuv", exp_params.set_name, we,he, no_of_images));
-    cmd = sprintf("ffmpeg -hide_banner -i %s -pix_fmt yuv444p10le -vf scale=in_range=full:in_color_matrix=bt709:out_range=full:out_color_matrix=bt709 -color_primaries bt709  -color_trc bt709 -colorspace bt709 -y %s", input, output_file);
-elseif codec_in_file_format == "yuv420p10le"
-    output_file = fullfile(orig_yuv_folder, sprintf("%s_%dx%dx%d_1Hz_prec10_P420.yuv", exp_params.set_name, we,he, no_of_images));
-    cmd = sprintf("ffmpeg -hide_banner -i %s -pix_fmt yuv420p10le -vf scale=in_range=full:in_color_matrix=bt709:out_range=full:out_color_matrix=bt709 -color_primaries bt709  -color_trc bt709 -colorspace bt709 -y %s", input, output_file);
-else
-    error("Unable to convert to video file for Pixel Format %s", pix_fmt);
-end
-
-[status, out1] = system(cmd);
-
-
-dir_struct.input_raw = output_file;
-dir_struct.input_raw_fileEXT = ".yuv";
-exp_params.dir_struct = dir_struct;
-
-conversion_time = toc(tCstart);
-fprintf(['   Conversion done in  ' num2str(conversion_time) ' sec']);
-end
-
-function time = extract_time(charVector)
-% Split the char vector into lines
-lines = strsplit(charVector, '\n');
-
-time = [];  % Initialize the time vector
-
-for i = 1:length(lines)
-    line = strtrim(lines{i});  % Remove leading and trailing white spaces
-    if startsWith(line, 'Total Time:')  % Check if the line starts with 'Total Time:'
-        tokens = strsplit(line);  % Split the line into words
-        time = [time, str2double(tokens{3})];  % Add the number after 'Total Time:' to time
-    end
-end
-end
-
-
-
-function img_bpp = get_gmis_image_bpp(out1, imgNo)
-% Assuming 'text' is your multiline text
-lines = splitlines(out1);
-if imgNo ==1
-    pattern1 = "Compressed Image No :   1";
-else
-    if imgNo<11
-        pattern1 = sprintf("ImageNo : %d  Residue of ", imgNo-1);
-    else
-        pattern1 = sprintf("ImageNo :%d  Residue of ", imgNo-1);
-    end
-end
-
-for i = 1:length(lines)
-    if contains(lines{i}, pattern1)
-        % Extract the line
-        line = lines{i};
-
-        % Split the line into words
-        words = split(line);
-
-        % The last word is the desired number
-        numStr = words{end};
-        img_bpp = str2double(numStr);
-        break;
-
-    end
-end
-
-end
