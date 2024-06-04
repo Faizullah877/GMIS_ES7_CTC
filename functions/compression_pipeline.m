@@ -1268,36 +1268,3 @@ for i = 1:length(lines)
     end
 end
 end
-
-
-
-function img_bpp = get_gmis_image_bpp(out1, imgNo)
-% Assuming 'text' is your multiline text
-lines = splitlines(out1);
-if imgNo ==1
-    pattern1 = "Compressed Image No :   1";
-else
-    if imgNo<11
-        pattern1 = sprintf("ImageNo : %d  Residue of ", imgNo-1);
-    else
-        pattern1 = sprintf("ImageNo :%d  Residue of ", imgNo-1);
-    end
-end
-
-for i = 1:length(lines)
-    if contains(lines{i}, pattern1)
-        % Extract the line
-        line = lines{i};
-
-        % Split the line into words
-        words = split(line);
-
-        % The last word is the desired number
-        numStr = words{end};
-        img_bpp = str2double(numStr);
-        break;
-
-    end
-end
-
-end

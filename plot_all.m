@@ -1,14 +1,16 @@
 clc
 % clear all
 
-M_file = "D:\GMIS_EXPs\Test_CTC\Results\Metrics.mat";
+M_File_Path = "D:\GMIS_EXPs\Evaluate_10F\Results";
+
+M_file = fullfile(M_File_Path, "Metrics.mat");
 plot_all_codecs = true;
 
-figures_folder = "D:\GMIS_EXPs\Test_CTC\Results\Plots";
+figures_folder = fullfile(M_File_Path, "Plots");
 if(~exist(figures_folder, 'dir')), mkdir(figures_folder); end
 
 load(M_file);
-set_name = "TestPlant_Teapot";
+set_name = "GolfClubHead_CityScape_10thF";
 
 set_results_present = isfield(M, set_name);
 if(set_results_present ~= 1)
@@ -16,7 +18,7 @@ if(set_results_present ~= 1)
     return;
 end
 
-MaxBPP = 2.0; 
+MaxBPP = 1.0; 
 
 set_fig_folder = fullfile(figures_folder, set_name);
 if(~exist(set_fig_folder, 'dir')), mkdir(set_fig_folder); end
@@ -28,12 +30,12 @@ if(plot_all_codecs)
     plot_codecs = string(fieldnames(M.(set_name)));
 else
     % plot_codecs = ["JPEG1", "JPEG1_Arithmetic", "JPEG2000", "JPEGXL", "VVC_VVenC_Inter", "VVC_VVenC_Intra"];
-    plot_codecs = ["JPEG2000", "JPEGXL", "VVC_VTM_Inter", "VVC_VTM_Intra", "VVC_VVenC_Inter", "VVC_VVenC_Intra"];
+    plot_codecs = ["JPEG1", "JPEG1_Arithmetic","JPEG2000", "JPEGXL", "VVC_VTM_Intra", "VVC_VVenC_Inter",];
     % plot_codecs = ["VVC_VVenC_Inter", "VVC_VVenC_Intra", "VVC_VTM_Inter", "VVC_VTM_Intra"];
 %     plot_codecs = {"JPEG1_Huffman", "JPEG1_Arithmetic", "JPEG1arith_rdopt", "H264_AVC","H264_AVCintra", "JPEG2000", "JPEGXL", "UNSW_SJU_JPEG1arith_rdopt", "UNSW_SJU_JPEG1arith_rdopt_22p"};
 end
 
-markers = {'k-d', 'g-d', 'b-*', 'b--*', 'm-o','m--o', 'm-*', 'm-.*', '-->', ':<','-p','-h', '--o', ':+', '-.*'};
+markers = {'k-d', 'k--d', 'b-*', 'g-*', 'm-o','m--o', 'r-x', 'r-.x', '-->', ':<','-p','-h', '--o', ':+', '-.*'};
 
 Markers = struct();
 

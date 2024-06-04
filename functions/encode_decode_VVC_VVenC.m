@@ -53,8 +53,9 @@ function report = encode_decode_VVC_VVenC(input)
         end
 
         % tConStartT = tic;
+        ffmpeg_exe = fullfile(input.codec_folder, "ffmpeg.exe");
         ppm_output=fullfile(input.decompressed_folder,"dec_image_%03d.ppm");
-        conv_cmd = sprintf('ffmpeg.exe -f rawvideo -vcodec rawvideo -s %dx%d -pix_fmt yuv420p10le -i %s -pix_fmt rgb24 -vf scale=in_range=full:in_color_matrix=bt709:out_range=full:out_color_matrix=bt709 -color_primaries bt709 -color_trc bt709 -colorspace bt709 -y %s', no_cols, no_rows, decoded_video_yuv, ppm_output);
+        conv_cmd = sprintf('%s -f rawvideo -vcodec rawvideo -s %dx%d -pix_fmt yuv420p10le -i %s -pix_fmt rgb24 -vf scale=in_range=full:in_color_matrix=bt709:out_range=full:out_color_matrix=bt709 -color_primaries bt709 -color_trc bt709 -colorspace bt709 -y %s', ffmpeg_exe, no_cols, no_rows, decoded_video_yuv, ppm_output);
         [status, ~] = system(conv_cmd);
         if(status)
             fprintf("Failed to convert [%s] with [ffmpeg] to [%s].\n", decoded_video_yuv, decoded_rgb_files);

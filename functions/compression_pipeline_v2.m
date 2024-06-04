@@ -69,6 +69,7 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
         input.set_name = set_name;
         input.codec_folder = dir_struct.codec_folder;
         input.input_raw = fullfile(dir_struct.ground_truth, data_format);
+        input.set_q_folder = set_q_folder;
         input.compressed_folder = set_compressed_folder;
         input.decompressed_folder = set_dec_folder;
         input.q_value = q_v;
@@ -110,8 +111,13 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
             input.config = "inter";
             codec_report = encode_decode_VVC_VTM(input);
         elseif strcmp(codec, "VVC_VTM_Intra")
-            input.config = "inter";
+            input.config = "intra";
             codec_report = encode_decode_VVC_VTM(input);
+        elseif strcmp(codec, "SJU_Arch_DPCM_QDCT")
+            codec_report = encode_decode_DPCM_QDCT(input);
+        elseif strcmp(codec, "SJU_Arch_DPCM_PIXELS")
+            input.encoding_scheme = "jpg1_dpcm_pixels_seq_v2";
+            codec_report = encode_decode_SJU_ARCH(input);
         else
             fprintf("Codec [%s] functionality not included yet", codec);
             error("Failed");
@@ -128,7 +134,7 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
             Orig_IMG = imread(input_raw);
             [no_rows, no_cols, ~] = size(Orig_IMG);
             [~, image_name, ~] = fileparts(input_raw);
-            decoded_ppm_file = fullfile(codec_report.set_dec_folder, sprintf('dec_image_%03d.ppm', imgNo));
+            decoded_ppm_file = fullfile(codec_report.set_dec_folder, sprintf('dec_image_%03d.png', imgNo));
             Recon_IMG = imread(decoded_ppm_file);
             image_IQA_values = evaluate_images_IQA(Orig_IMG, Recon_IMG, QA_metrics);
             if ~isfield(codec_report, "images_result_table")
