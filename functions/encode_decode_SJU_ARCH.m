@@ -30,7 +30,7 @@ tCstartimg= tic;
 report.set_enc_time = toc(tCstartimg);
 % disp(['               => Set Compressed in ', num2str(set_enc_time), ' sec']);
 
-command = sprintf('%s -decode %s -o_png_dir %s',decoder_exe, gmis_file, input.decompressed_folder);
+command = sprintf('%s -decode %s -o_ppm_dir %s',decoder_exe, gmis_file, input.decompressed_folder);
 tDstartimg = tic;
 [status, out] = system(command);
 report.set_dec_time = toc(tDstartimg);

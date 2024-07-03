@@ -68,7 +68,11 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
         input = struct();
         input.set_name = set_name;
         input.codec_folder = dir_struct.codec_folder;
-        input.input_raw = fullfile(dir_struct.ground_truth, data_format);
+        if strcmp(codec, "JPEG_AI_VM") | strcmp(codec, "SJU_Arch_JPEG_AI")
+            input.input_raw = exp_params.set_path;
+        else
+            input.input_raw = fullfile(dir_struct.ground_truth, data_format);
+        end
         input.set_q_folder = set_q_folder;
         input.compressed_folder = set_compressed_folder;
         input.decompressed_folder = set_dec_folder;
@@ -104,6 +108,14 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
         elseif strcmp(codec, "VVC_VVenC_Inter")
             input.config = "inter";
             codec_report = encode_decode_VVC_VVenC(input);
+        elseif strcmp(codec, "VVC_VVenC_Inter_1_thread")
+            input.config = "inter";
+            input.no_of_threads = 1; 
+            codec_report = encode_decode_VVC_VVenC(input);
+        elseif strcmp(codec, "VVC_VVenC_Inter_8_thread")
+            input.config = "inter";
+            input.no_of_threads = 8; 
+            codec_report = encode_decode_VVC_VVenC(input);
         elseif strcmp(codec, "VVC_VVenC_Intra")
             input.config = "intra";
             codec_report = encode_decode_VVC_VVenC(input);
@@ -114,10 +126,27 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
             input.config = "intra";
             codec_report = encode_decode_VVC_VTM(input);
         elseif strcmp(codec, "SJU_Arch_DPCM_QDCT")
-            codec_report = encode_decode_DPCM_QDCT(input);
-        elseif strcmp(codec, "SJU_Arch_DPCM_PIXELS")
-            input.encoding_scheme = "jpg1_dpcm_pixels_seq_v2";
+            input.encoding_scheme = "jpeg1_dpcm_qdct_seq";
             codec_report = encode_decode_SJU_ARCH(input);
+            % codec_report = encode_decode_DPCM_QDCT(input);
+        elseif strcmp(codec, "SJU_Arch_DPCM_PIXELSv2")
+            input.config = "arith";
+            input.codec = "JPEG1";
+            codec_report = encode_decode_SJU_ARCHs(input);
+            % input.encoding_scheme = "jpeg1_dpcm_pixels_seq_idx";
+            % codec_report = encode_decode_SJU_ARCH(input);
+        elseif strcmp(codec, "JPEG_AI_VM")
+            input.data_folder = codec_data_folder;
+            codec_report = organize_and_get_report_JPEG_AI_VM(input);
+        elseif strcmp(codec, "SJU_Arch_JPEG_AI")
+            input.data_folder = codec_data_folder;
+            codec_report = organize_and_get_report_SJU_Arch_JPEG_AI(input);
+        elseif strcmp(codec, "SJU_Arch_JPEG2000v2")
+            input.codec = "JPEG2000";
+            codec_report = encode_decode_SJU_ARCHs(input);
+        elseif strcmp(codec, "SJU_Arch_JPEG_XLv2")
+            input.codec = "JPEG_XL";
+            codec_report = encode_decode_SJU_ARCHs(input);
         else
             fprintf("Codec [%s] functionality not included yet", codec);
             error("Failed");
@@ -134,19 +163,24 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
             Orig_IMG = imread(input_raw);
             [no_rows, no_cols, ~] = size(Orig_IMG);
             [~, image_name, ~] = fileparts(input_raw);
-            decoded_ppm_file = fullfile(codec_report.set_dec_folder, sprintf('dec_image_%03d.png', imgNo));
-            Recon_IMG = imread(decoded_ppm_file);
-            image_IQA_values = evaluate_images_IQA(Orig_IMG, Recon_IMG, QA_metrics);
-            if ~isfield(codec_report, "images_result_table")
-                compressed_img_size = codec_report.compressed_file_size/no_of_images;
-                img_bpp = codec_report.set_bpp;
-                img_enc_time = codec_report.set_enc_time/no_of_images;
-                img_dec_time = codec_report.set_dec_time/no_of_images;
-                ImagesResult_T1(imgNo,:) ={imgNo, image_name, no_cols, no_rows, compressed_img_size, img_bpp, img_enc_time, img_dec_time};
+            decoded_ppm_file = fullfile(codec_report.set_dec_folder, sprintf('dec_image_%03d.ppm', imgNo));
+            dec_file_exists = isfile(decoded_ppm_file);
+            if dec_file_exists
+                Recon_IMG = imread(decoded_ppm_file);
+                image_IQA_values = evaluate_images_IQA(Orig_IMG, Recon_IMG, QA_metrics);
+                if ~isfield(codec_report, "images_result_table")
+                    compressed_img_size = codec_report.compressed_file_size/no_of_images;
+                    img_bpp = codec_report.set_bpp;
+                    img_enc_time = codec_report.set_enc_time/no_of_images;
+                    img_dec_time = codec_report.set_dec_time/no_of_images;
+                    ImagesResult_T1(imgNo,:) ={imgNo, image_name, no_cols, no_rows, compressed_img_size, img_bpp, img_enc_time, img_dec_time};
+                end
+                tmp = struct2cell(image_IQA_values);
+                v = [tmp{:}];
+                Images_IQA_T(imgNo,:) = v;
+            else             
+                Images_IQA_T(imgNo,:) = NaN;
             end
-            tmp = struct2cell(image_IQA_values);
-            v = [tmp{:}];
-            Images_IQA_T(imgNo,:) = v;
             textprogressbar(imgNo/no_of_images*100);
         end
         eval_set_time = toc(eval_set_start_time);
@@ -159,6 +193,17 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
         fprintf("\tEnd Time: %s.\n\n", get_current_time_str());
     
         m_table = array2table(Images_IQA_T, 'VariableNames',QA_metrics);
+
+        columnNames = m_table.Properties.VariableNames;
+        for i = 1:length(columnNames)
+            columnName = columnNames{i};
+            if isnumeric(m_table.(columnName))
+                meanValue = mean(m_table.(columnName), 'omitnan');
+                nanIndices = isnan(m_table.(columnName));
+                m_table.(columnName)(nanIndices) = meanValue;
+            end
+        end
+
         images_results_table = [ImagesResult_T1, m_table];
         if append_row
             existing_rows_count = height(set_avg_results);
