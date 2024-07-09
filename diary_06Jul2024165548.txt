@@ -1,0 +1,16 @@
+	Start Time: 06-Jul-2024 16:55:48.
+	Compression Pipeline running for SET : [GolfClubHead_CityScape_10thF {1920x1080x26}]   CODEC : [SJU_Arch_JPEG1_DPCMPIXELS_RDOPT] and RATE : [0.08] => 1/6
+{Out of memory.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('encode_decode_SJU_ARCH_JPEG1_RDOPT', 'D:\GMIS_ES_7\functions\encode_decode_SJU_ARCH_JPEG1_RDOPT.m', 121)" style="font-weight:bold">encode_decode_SJU_ARCH_JPEG1_RDOPT</a> (<a href="matlab: opentoline('D:\GMIS_ES_7\functions\encode_decode_SJU_ARCH_JPEG1_RDOPT.m',121,0)">line 121</a>)
+    [status, out1] = system(rdopt_cmd);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('compression_pipeline_v2', 'D:\GMIS_ES_7\functions\compression_pipeline_v2.m', 142)" style="font-weight:bold">compression_pipeline_v2</a> (<a href="matlab: opentoline('D:\GMIS_ES_7\functions\compression_pipeline_v2.m',142,0)">line 142</a>)
+            codec_report = encode_decode_SJU_ARCH_JPEG1_RDOPT(input);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ctc_anchor_main', 'D:\GMIS_ES_7\ctc_anchor_main.m', 83)" style="font-weight:bold">ctc_anchor_main</a> (<a href="matlab: opentoline('D:\GMIS_ES_7\ctc_anchor_main.m',83,0)">line 83</a>)
+    M = compression_pipeline_v2(exp_params, anch_P, M);
+
+<a href="matlab:helpview('matlab','error_nomem')" style="font-weight:bold">Related documentation</a>
+} 
+ctc_anchor_main

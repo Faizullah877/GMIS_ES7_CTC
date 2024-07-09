@@ -1,0 +1,274 @@
+   Conversion done in  5.6992 sec	Start Time: 08-Jul-2024 18:54:49.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG1] and RATE : [7.00] => 1/9
+		=> Set Compressed and Decompressed in 10.814041 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  253.2013 sec
+	End Time: 08-Jul-2024 18:59:13.
+
+	Start Time: 08-Jul-2024 18:59:14.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG1] and RATE : [20.00] => 2/9
+		=> Set Compressed and Decompressed in 10.058616 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  252.8516 sec
+	End Time: 08-Jul-2024 19:03:37.
+
+	Start Time: 08-Jul-2024 19:03:37.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG1] and RATE : [40.00] => 3/9
+		=> Set Compressed and Decompressed in 9.097528 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  256.0758 sec
+	End Time: 08-Jul-2024 19:08:02.
+
+	Start Time: 08-Jul-2024 19:08:03.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG1] and RATE : [60.00] => 4/9
+		=> Set Compressed and Decompressed in 10.617242 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  259.7048 sec
+	End Time: 08-Jul-2024 19:12:33.
+
+	Start Time: 08-Jul-2024 19:12:33.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG1] and RATE : [80.00] => 5/9
+		=> Set Compressed and Decompressed in 11.524889 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  264.1939 sec
+	End Time: 08-Jul-2024 19:17:09.
+
+	Start Time: 08-Jul-2024 19:17:09.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG1] and RATE : [85.00] => 6/9
+		=> Set Compressed and Decompressed in 12.442173 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  268.6187 sec
+	End Time: 08-Jul-2024 19:21:50.
+
+	Start Time: 08-Jul-2024 19:21:51.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG1] and RATE : [90.00] => 7/9
+		=> Set Compressed and Decompressed in 12.218296 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  264.3621 sec
+	End Time: 08-Jul-2024 19:26:27.
+
+	Start Time: 08-Jul-2024 19:26:27.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG1] and RATE : [92.00] => 8/9
+		=> Set Compressed and Decompressed in 12.601107 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  259.6102 sec
+	End Time: 08-Jul-2024 19:31:00.
+
+	Start Time: 08-Jul-2024 19:31:00.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG1] and RATE : [95.00] => 9/9
+		=> Set Compressed and Decompressed in 10.827675 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  258.5171 sec
+	End Time: 08-Jul-2024 19:35:29.
+
+<strong>  => Experiment Done : => SET = [EPFL_Set2],  => CODEC = [JPEG1]  => TIME TAKEN = [2440.324242 sec]</strong>
+
+	Start Time: 08-Jul-2024 19:35:30.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG1_Arithmetic] and RATE : [7.00] => 1/9
+		=> Set Compressed and Decompressed in 9.613231 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  248.2622 sec
+	End Time: 08-Jul-2024 19:39:47.
+
+	Start Time: 08-Jul-2024 19:39:48.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG1_Arithmetic] and RATE : [20.00] => 2/9
+		=> Set Compressed and Decompressed in 9.201754 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  249.5663 sec
+	End Time: 08-Jul-2024 19:44:07.
+
+	Start Time: 08-Jul-2024 19:44:07.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG1_Arithmetic] and RATE : [40.00] => 3/9
+		=> Set Compressed and Decompressed in 9.799909 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  253.7572 sec
+	End Time: 08-Jul-2024 19:48:31.
+
+	Start Time: 08-Jul-2024 19:48:31.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG1_Arithmetic] and RATE : [60.00] => 4/9
+		=> Set Compressed and Decompressed in 10.807585 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  258.3935 sec
+	End Time: 08-Jul-2024 19:53:00.
+
+	Start Time: 08-Jul-2024 19:53:00.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG1_Arithmetic] and RATE : [80.00] => 5/9
+		=> Set Compressed and Decompressed in 12.696072 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  257.7516 sec
+	End Time: 08-Jul-2024 19:57:31.
+
+	Start Time: 08-Jul-2024 19:57:31.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG1_Arithmetic] and RATE : [85.00] => 6/9
+		=> Set Compressed and Decompressed in 14.145177 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  255.774 sec
+	End Time: 08-Jul-2024 20:02:01.
+
+	Start Time: 08-Jul-2024 20:02:02.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG1_Arithmetic] and RATE : [90.00] => 7/9
+		=> Set Compressed and Decompressed in 15.680772 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  257.1066 sec
+	End Time: 08-Jul-2024 20:06:34.
+
+	Start Time: 08-Jul-2024 20:06:35.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG1_Arithmetic] and RATE : [92.00] => 8/9
+		=> Set Compressed and Decompressed in 16.799930 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  255.4434 sec
+	End Time: 08-Jul-2024 20:11:07.
+
+	Start Time: 08-Jul-2024 20:11:07.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG1_Arithmetic] and RATE : [95.00] => 9/9
+		=> Set Compressed and Decompressed in 19.815734 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  259.771 sec
+	End Time: 08-Jul-2024 20:15:47.
+
+<strong>  => Experiment Done : => SET = [EPFL_Set2],  => CODEC = [JPEG1_Arithmetic]  => TIME TAKEN = [2417.907082 sec]</strong>
+
+	Start Time: 08-Jul-2024 20:15:48.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG2000] and RATE : [7.00] => 1/9
+		=> Set Compressed and Decompressed in 9.872299 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  257.5525 sec
+	End Time: 08-Jul-2024 20:20:15.
+
+	Start Time: 08-Jul-2024 20:20:16.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG2000] and RATE : [20.00] => 2/9
+		=> Set Compressed and Decompressed in 6.947852 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  256.4074 sec
+	End Time: 08-Jul-2024 20:24:39.
+
+	Start Time: 08-Jul-2024 20:24:39.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG2000] and RATE : [40.00] => 3/9
+		=> Set Compressed and Decompressed in 6.976751 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  255.654 sec
+	End Time: 08-Jul-2024 20:29:02.
+
+	Start Time: 08-Jul-2024 20:29:03.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG2000] and RATE : [60.00] => 4/9
+		=> Set Compressed and Decompressed in 7.024485 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  256.7672 sec
+	End Time: 08-Jul-2024 20:33:26.
+
+	Start Time: 08-Jul-2024 20:33:27.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG2000] and RATE : [80.00] => 5/9
+		=> Set Compressed and Decompressed in 7.067786 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  258.3999 sec
+	End Time: 08-Jul-2024 20:37:52.
+
+	Start Time: 08-Jul-2024 20:37:53.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG2000] and RATE : [85.00] => 6/9
+		=> Set Compressed and Decompressed in 7.171654 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  258.1883 sec
+	End Time: 08-Jul-2024 20:42:18.
+
+	Start Time: 08-Jul-2024 20:42:19.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG2000] and RATE : [90.00] => 7/9
+		=> Set Compressed and Decompressed in 7.302559 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  270.3433 sec
+	End Time: 08-Jul-2024 20:46:57.
+
+	Start Time: 08-Jul-2024 20:46:57.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG2000] and RATE : [92.00] => 8/9
+		=> Set Compressed and Decompressed in 9.201537 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  259.4569 sec
+	End Time: 08-Jul-2024 20:51:26.
+
+	Start Time: 08-Jul-2024 20:51:26.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEG2000] and RATE : [95.00] => 9/9
+		=> Set Compressed and Decompressed in 8.272370 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  258.8344 sec
+	End Time: 08-Jul-2024 20:55:53.
+
+<strong>  => Experiment Done : => SET = [EPFL_Set2],  => CODEC = [JPEG2000]  => TIME TAKEN = [2406.389090 sec]</strong>
+
+	Start Time: 08-Jul-2024 20:55:54.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEGXL] and RATE : [7.00] => 1/9
+		=> Set Compressed and Decompressed in 48.843746 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  259.0487 sec
+	End Time: 08-Jul-2024 21:01:02.
+
+	Start Time: 08-Jul-2024 21:01:03.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEGXL] and RATE : [20.00] => 2/9
+		=> Set Compressed and Decompressed in 48.384221 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  257.3568 sec
+	End Time: 08-Jul-2024 21:06:09.
+
+	Start Time: 08-Jul-2024 21:06:09.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEGXL] and RATE : [40.00] => 3/9
+		=> Set Compressed and Decompressed in 48.265165 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  258.6636 sec
+	End Time: 08-Jul-2024 21:11:16.
+
+	Start Time: 08-Jul-2024 21:11:17.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEGXL] and RATE : [60.00] => 4/9
+		=> Set Compressed and Decompressed in 48.101842 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  260.3639 sec
+	End Time: 08-Jul-2024 21:16:25.
+
+	Start Time: 08-Jul-2024 21:16:26.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEGXL] and RATE : [80.00] => 5/9
+		=> Set Compressed and Decompressed in 49.540327 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  258.3709 sec
+	End Time: 08-Jul-2024 21:21:34.
+
+	Start Time: 08-Jul-2024 21:21:35.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEGXL] and RATE : [85.00] => 6/9
+		=> Set Compressed and Decompressed in 49.840463 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  258.9671 sec
+	End Time: 08-Jul-2024 21:26:44.
+
+	Start Time: 08-Jul-2024 21:26:44.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEGXL] and RATE : [90.00] => 7/9
+		=> Set Compressed and Decompressed in 51.405973 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  258.6506 sec
+	End Time: 08-Jul-2024 21:31:54.
+
+	Start Time: 08-Jul-2024 21:31:55.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEGXL] and RATE : [92.00] => 8/9
+		=> Set Compressed and Decompressed in 51.184816 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  260.1975 sec
+	End Time: 08-Jul-2024 21:37:06.
+
+	Start Time: 08-Jul-2024 21:37:07.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [JPEGXL] and RATE : [95.00] => 9/9
+		=> Set Compressed and Decompressed in 53.345623 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  263.2205 sec
+	End Time: 08-Jul-2024 21:42:24.
+
+<strong>  => Experiment Done : => SET = [EPFL_Set2],  => CODEC = [JPEGXL]  => TIME TAKEN = [2790.153002 sec]</strong>
+
+   Conversion done in  4.4805 sec	Start Time: 08-Jul-2024 21:42:29.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [VVC_VTM_Intra] and RATE : [50.00] => 1/10
+		=> Set Compressed and Decompressed in 771.822399 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  257.1243 sec
+	End Time: 08-Jul-2024 21:59:38.
+
+	Start Time: 08-Jul-2024 21:59:39.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [VVC_VTM_Intra] and RATE : [45.00] => 2/10
+		=> Set Compressed and Decompressed in 912.534707 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  259.5346 sec
+	End Time: 08-Jul-2024 22:19:11.
+
+	Start Time: 08-Jul-2024 22:19:12.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [VVC_VTM_Intra] and RATE : [40.00] => 3/10
+		=> Set Compressed and Decompressed in 1291.781679 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  258.7519 sec
+	End Time: 08-Jul-2024 22:45:03.
+
+	Start Time: 08-Jul-2024 22:45:04.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [VVC_VTM_Intra] and RATE : [35.00] => 4/10
+		=> Set Compressed and Decompressed in 2726.341943 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  270.1963 sec
+	End Time: 08-Jul-2024 23:35:00.
+
+	Start Time: 08-Jul-2024 23:35:01.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [VVC_VTM_Intra] and RATE : [30.00] => 5/10
+		=> Set Compressed and Decompressed in 7483.438649 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  257.2224 sec
+	End Time: 09-Jul-2024 01:44:02.
+
+	Start Time: 09-Jul-2024 01:44:03.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [VVC_VTM_Intra] and RATE : [25.00] => 6/10
+		=> Set Compressed and Decompressed in 20544.974201 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  259.3928 sec
+	End Time: 09-Jul-2024 07:30:50.
+
+	Start Time: 09-Jul-2024 07:30:51.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [VVC_VTM_Intra] and RATE : [20.00] => 7/10
+{Operation terminated by user during <a href="matlab:matlab.internal.language.introspective.errorDocCallback('encode_decode_VVC_VTM')" style="font-weight:bold">encode_decode_VVC_VTM</a>
+
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('compression_pipeline_v2', 'D:\GMIS_ES_7\functions\compression_pipeline_v2.m', 127)" style="font-weight:bold">compression_pipeline_v2</a> (<a href="matlab: opentoline('D:\GMIS_ES_7\functions\compression_pipeline_v2.m',127,0)">line 127</a>)
+            codec_report = encode_decode_VVC_VTM(input);
+
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ctc_anchor_main', 'D:\GMIS_ES_7\ctc_anchor_main.m', 87)" style="font-weight:bold">ctc_anchor_main</a> (<a href="matlab: opentoline('D:\GMIS_ES_7\ctc_anchor_main.m',87,0)">line 87</a>)
+    M = compression_pipeline_v2(exp_params, anch_P, M);
+} 
+uiimport('D:\GMIS_EXPs\MutliExposure\Results\Metrics.mat',1)
+M.EPFL_Set2.VVC_VTM_Intra.SET_AVG_RESULTS(1:4,:) = [];
+ctc_anchor_main

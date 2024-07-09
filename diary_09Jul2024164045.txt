@@ -1,0 +1,103 @@
+	Start Time: 09-Jul-2024 16:40:46.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [SJU_Arch_DPCM_PIXELSv2] and RATE : [5.00] => 1/8
+epfl_set2_001  => BPP   0.029447  => PSNR = 29.032015
+epfl_set2_002  => BPP   0.020597  => PSNR = 29.215126
+epfl_set2_003  => BPP   0.027789  => PSNR = 28.727307
+epfl_set2_004  => BPP   0.028230  => PSNR = 27.749569
+epfl_set2_005  => BPP   0.013722  => PSNR = 26.579627
+epfl_set2_006  => BPP   0.011417  => PSNR = 28.501022
+epfl_set2_007  => BPP   0.465689  => PSNR = 29.338197
+epfl_set2_008  => BPP   0.023801  => PSNR = 28.877412
+epfl_set2_009  => BPP   0.038119  => PSNR = 29.115215
+		=> Set Compressed and Decompressed in 60.284480 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  251.7584 sec
+	End Time: 09-Jul-2024 16:45:58.
+
+	Start Time: 09-Jul-2024 16:46:00.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [SJU_Arch_DPCM_PIXELSv2] and RATE : [10.00] => 2/8
+epfl_set2_001  => BPP   0.056013  => PSNR = 32.056171
+epfl_set2_002  => BPP   0.033517  => PSNR = 32.173224
+epfl_set2_003  => BPP   0.043383  => PSNR = 32.057642
+epfl_set2_004  => BPP   0.047819  => PSNR = 29.440752
+epfl_set2_005  => BPP   0.033446  => PSNR = 27.787205
+epfl_set2_006  => BPP   0.028314  => PSNR = 30.760859
+epfl_set2_007  => BPP   0.487549  => PSNR = 32.353283
+epfl_set2_008  => BPP   0.039302  => PSNR = 32.209546
+epfl_set2_009  => BPP   0.054789  => PSNR = 32.165424
+		=> Set Compressed and Decompressed in 58.247182 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  255.2131 sec
+	End Time: 09-Jul-2024 16:51:13.
+
+	Start Time: 09-Jul-2024 16:51:14.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [SJU_Arch_DPCM_PIXELSv2] and RATE : [20.00] => 3/8
+epfl_set2_001  => BPP   0.097018  => PSNR = 34.118649
+epfl_set2_002  => BPP   0.060690  => PSNR = 34.226266
+epfl_set2_003  => BPP   0.075359  => PSNR = 34.226234
+epfl_set2_004  => BPP   0.100310  => PSNR = 30.538090
+epfl_set2_005  => BPP   0.117899  => PSNR = 28.624377
+epfl_set2_006  => BPP   0.101974  => PSNR = 32.201994
+epfl_set2_007  => BPP   0.547435  => PSNR = 34.820556
+epfl_set2_008  => BPP   0.068480  => PSNR = 34.585690
+epfl_set2_009  => BPP   0.088506  => PSNR = 34.641895
+		=> Set Compressed and Decompressed in 58.044277 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  260.0864 sec
+	End Time: 09-Jul-2024 16:56:32.
+
+	Start Time: 09-Jul-2024 16:56:34.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [SJU_Arch_DPCM_PIXELSv2] and RATE : [40.00] => 4/8
+epfl_set2_001  => BPP   0.179922  => PSNR = 35.453839
+epfl_set2_002  => BPP   0.140110  => PSNR = 35.461333
+epfl_set2_003  => BPP   0.157619  => PSNR = 35.682935
+epfl_set2_004  => BPP   0.267413  => PSNR = 31.299063
+epfl_set2_005  => BPP   0.368805  => PSNR = 29.382822
+epfl_set2_006  => BPP   0.327983  => PSNR = 33.012048
+epfl_set2_007  => BPP   0.705760  => PSNR = 36.469798
+epfl_set2_008  => BPP   0.135896  => PSNR = 36.162497
+epfl_set2_009  => BPP   0.165150  => PSNR = 36.138990
+		=> Set Compressed and Decompressed in 57.364526 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  264.7904 sec
+	End Time: 09-Jul-2024 17:01:56.
+
+	Start Time: 09-Jul-2024 17:01:57.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [SJU_Arch_DPCM_PIXELSv2] and RATE : [60.00] => 5/8
+epfl_set2_001  => BPP   0.294546  => PSNR = 36.025146
+epfl_set2_002  => BPP   0.272692  => PSNR = 35.991526
+epfl_set2_003  => BPP   0.289978  => PSNR = 36.261651
+epfl_set2_004  => BPP   0.468266  => PSNR = 31.818517
+epfl_set2_005  => BPP   0.623620  => PSNR = 29.902199
+epfl_set2_006  => BPP   0.566535  => PSNR = 33.454292
+epfl_set2_007  => BPP   0.912000  => PSNR = 36.903437
+epfl_set2_008  => BPP   0.234830  => PSNR = 36.591566
+epfl_set2_009  => BPP   0.273555  => PSNR = 36.506637
+		=> Set Compressed and Decompressed in 60.046913 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  270.3937 sec
+	End Time: 09-Jul-2024 17:07:27.
+
+	Start Time: 09-Jul-2024 17:07:29.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [SJU_Arch_DPCM_PIXELSv2] and RATE : [75.00] => 6/8
+epfl_set2_001  => BPP   0.475668  => PSNR = 36.677950
+epfl_set2_002  => BPP   0.488090  => PSNR = 36.594812
+epfl_set2_003  => BPP   0.502746  => PSNR = 36.879154
+epfl_set2_004  => BPP   0.741469  => PSNR = 32.355994
+epfl_set2_005  => BPP   0.953885  => PSNR = 30.428123
+epfl_set2_006  => BPP   0.880760  => PSNR = 33.958764
+epfl_set2_007  => BPP   1.179908  => PSNR = 37.402148
+epfl_set2_008  => BPP   0.401157  => PSNR = 37.118376
+epfl_set2_009  => BPP   0.448570  => PSNR = 37.022970
+		=> Set Compressed and Decompressed in 63.210055 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]77%     [.......   ]88%     [........  ]100%    [..........]   done in  267.014 sec
+	End Time: 09-Jul-2024 17:12:59.
+
+	Start Time: 09-Jul-2024 17:13:00.
+	Compression Pipeline running for SET : [EPFL_Set2 {5496x3672x9}]   CODEC : [SJU_Arch_DPCM_PIXELSv2] and RATE : [85.00] => 7/8
+epfl_set2_001  => BPP   0.758616  => PSNR = 37.369257
+epfl_set2_002  => BPP   0.817579  => PSNR = 37.233328
+epfl_set2_003  => BPP   0.830669  => PSNR = 37.531587
+epfl_set2_004  => BPP   1.160740  => PSNR = 32.990484
+epfl_set2_005  => BPP   1.479033  => PSNR = 31.176072
+epfl_set2_006  => BPP   1.375143  => PSNR = 34.486495
+epfl_set2_007  => BPP   1.570845  => PSNR = 37.920967
+epfl_set2_008  => BPP   0.677960  => PSNR = 37.663860
+epfl_set2_009  => BPP   0.731496  => PSNR = 37.568626
+		=> Set Compressed and Decompressed in 62.996568 sec.
+        => Evaluating : 11%     [.         ]22%     [..        ]33%     [...       ]44%     [....      ]55%     [.....     ]66%     [......    ]
