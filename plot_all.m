@@ -1,7 +1,7 @@
 clc
 % clear all
 
-M_File_Path = "D:\GMIS_ES7_Results\old_pc10F";
+M_File_Path = "D:\GMIS_ES7_Results\OldPC_Results";
 
 M_file = fullfile(M_File_Path, "Metrics.mat");
 plot_all_codecs = false;
@@ -10,7 +10,7 @@ figures_folder = fullfile(M_File_Path, "Plots");
 if(~exist(figures_folder, 'dir')), mkdir(figures_folder); end
 
 load(M_file);
-set_name = "PlantPot_Stones_10thF";
+set_name = "Pictures_Teapot";
 
 set_results_present = isfield(M, set_name);
 if(set_results_present ~= 1)
@@ -29,6 +29,8 @@ plot_metrics = [ "PSNR_Y", "PSNR_YUV", "PSNR_HVS_M_Y", "MSSSIM_Y"];
 if(plot_all_codecs)
     plot_codecs = string(fieldnames(M.(set_name)));
 else
+    % plot_codecs = ["JPEG2000", "JPEGXL", "SJU_Arch_JPEG2000v2", "SJU_Arch_JPEG_XLv2"];
+    % plot_codecs = ["JPEG1", "JPEG1_Arithmetic","SJU_Arch_DPCM_PIXELSv2", "JPEG2000", "JPEGXL", "SJU_Arch_JPEG2000v2", "SJU_Arch_JPEG_XLv2", "JPEG_AI_VM", "SJU_Arch_JPEG_AI"];
     plot_codecs = ["JPEG1", "JPEG1_Arithmetic", "JPEG2000", "JPEGXL", "VVC_VVenC_Inter", "VVC_VTM_Intra", "SJU_Arch_DPCM_PIXELSv2", "SJU_Arch_JPEG2000v2", "SJU_Arch_JPEG_XLv2", "JPEG_AI_VM", "SJU_Arch_JPEG_AI"];
     % plot_codecs = ["JPEG1", "JPEG1_Arithmetic", "JPEG2000", "JPEGXL", "VVC_VVenC_Inter", "VVC_VTM_Intra", "SJU_Arch_DPCM_QDCT", "SJU_Arch_JPEG2000v1", "SJU_Arch_JPEG_XLv1", "SJU_Arch_DPCM_PIXELSv2", "SJU_Arch_JPEG2000v2", "SJU_Arch_JPEG_XLv2", "JPEG_AI_VM"];
     % plot_codecs = ["JPEG1", "JPEG1_Arithmetic", "JPEG2000", "JPEGXL", "VVC_VVenC_Inter", "VVC_VTM_Intra", "SJU_Arch_DPCM_QDCT", "SJU_Arch_JPEG2000", "SJU_Arch_JPEG_XL", "JPEG_AI_VM"];
@@ -50,7 +52,7 @@ plot_styles = { ...
     {"VVC_VTM_Intra"         , "-"    , 'm'     , 'x'        , "VVC intra"            } ...
     {"SJU_Arch_DPCM_PIXELSv1", "-."   , 'k'     , 'pentagram', "SJU-Arch JPEG 1"      } ...
     {"SJU_Arch_DPCM_PIXELSv2", ":"    , 'k'     , 'o'        , "SJU-Arch JPEG 1"      } ...
-    {"SJU_Arch_DPCM_QDCT"    , "-"    , 'y'     , 'o'        , "SJU-Arch JPEG 1"      } ...
+    {"SJU_Arch_DPCM_QDCT"    , ":"    , 'k'     , 'o'        , "SJU-Arch JPEG 1"      } ...
     {"SJU_Arch_JPEG2000v1"   , "-."   , 'g'     , 'o'        , "SJU-Arch JPEG 2000"   } ...
     {"SJU_Arch_JPEG2000v2"   , ":"    , 'g'     , '>'        , "SJU-Arch JPEG 2000"   } ...
     {"SJU_Arch_JPEG_XLv1"    , "-."   , 'b'     , '|'        , "SJU-Arch JPEG XL"     } ...

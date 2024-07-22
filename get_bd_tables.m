@@ -2,7 +2,7 @@ clc
 clear all
 
 addpath(genpath('./bjontegaard'));
-M_File_Path = "D:\GMIS_ES7_Results\old_pc";
+M_File_Path = "D:\GMIS_ES7_Results\HoloPC_Results";
 
 M_file = fullfile(M_File_Path, "Metrics.mat");
 plot_all_codecs = false;
@@ -11,7 +11,7 @@ tables_folder = fullfile(M_File_Path, "BD_Tables");
 if(~exist(tables_folder, 'dir')), mkdir(tables_folder); end
 
 load(M_file);
-set_name = "GolfClubHead_CityScape";
+set_name = "PlantPot_Stones";
 
 set_results_present = isfield(M, set_name);
 if(set_results_present ~= 1)
@@ -21,17 +21,18 @@ end
 
 MaxBPP = 1.0; 
 
-set_table_folder = fullfile(tables_folder, set_name);
-if(~exist(set_table_folder, 'dir')), mkdir(set_table_folder); end
+% set_table_folder = fullfile(tables_folder, set_name);
+% if(~exist(set_table_folder, 'dir')), mkdir(set_table_folder); end
 
 metrices = [ "PSNR_Y", "PSNR_YUV", "PSNR_HVS_M_Y", "MSSSIM_Y"];
 % plot_metrics = ["PSNR_RGB", "PSNR_Y",  "PSNR_HVS_M_Y", "MSSSIM_RGB"];
 
 if(plot_all_codecs)
-    codecs = string(fieldnames(M.(set_name)));
+    plot_codecs = string(fieldnames(M.(set_name)));
 else
+    plot_codecs = ["JPEG1", "JPEG1_Arithmetic", "SJU_Arch_DPCM_PIXELSv2", "JPEG2000", "SJU_Arch_JPEG2000v2", "JPEGXL", "SJU_Arch_JPEG_XLv2", "JPEG_AI_VM", "SJU_Arch_JPEG_AI"];  
     % plot_codecs = ["JPEG1", "JPEG1_Arithmetic", "JPEG2000"];
-    codecs = ["JPEG1", "JPEG1_Arithmetic", "JPEG2000", "JPEGXL", "VVC_VVenC_Inter", "VVC_VTM_Intra", "SJU_Arch_DPCM_PIXELSv2", "SJU_Arch_JPEG2000v2", "SJU_Arch_JPEG_XLv2", "JPEG_AI_VM", "SJU_Arch_JPEG_AI"];
+    % codecs = ["JPEG1", "JPEG1_Arithmetic", "JPEG2000", "JPEGXL", "VVC_VVenC_Inter", "VVC_VTM_Intra", "SJU_Arch_DPCM_PIXELSv2", "SJU_Arch_JPEG2000v2", "SJU_Arch_JPEG_XLv2", "JPEG_AI_VM", "SJU_Arch_JPEG_AI"];
     % plot_codecs = ["JPEG1", "JPEG1_Arithmetic", "JPEG2000", "JPEGXL", "VVC_VVenC_Inter", "VVC_VTM_Intra", "SJU_Arch_DPCM_QDCT", "SJU_Arch_JPEG2000v1", "SJU_Arch_JPEG_XLv1", "SJU_Arch_DPCM_PIXELSv2", "SJU_Arch_JPEG2000v2", "SJU_Arch_JPEG_XLv2", "JPEG_AI_VM"];
     % plot_codecs = ["JPEG1", "JPEG1_Arithmetic", "JPEG2000", "JPEGXL", "VVC_VVenC_Inter", "VVC_VTM_Intra", "SJU_Arch_DPCM_QDCT", "SJU_Arch_JPEG2000", "SJU_Arch_JPEG_XL", "JPEG_AI_VM"];
     % plot_codecs = ["JPEG1", "JPEG1_Arithmetic", "JPEG2000", "JPEGXL", "VVC_VVenC_Inter", "VVC_VVenC_Intra"];
@@ -61,18 +62,22 @@ codec_names = { ...
     {"SJU_Arch_JPEG_AI"      ,  "SJU-Arch JPEG AI"     } ...
     {"SJU_Arch_JPEG1_DPCMPIXELS_RDOPT",  "SJU-Arch JPEG1 Rdopt"}
     };
-xls_filename = fullfile(set_table_folder, sprintf("%s.xlsx", set_name));
+xls_filename = fullfile(tables_folder, sprintf("%s.xlsx", set_name));
 bd_rate_sheet = "BD_rates";
 bd_quality_sheet = "BD_quality";
 
 for cd =1:length(metrices)
     metric = metrices(cd);
-    [BD_rateT, BD_snrT] = get_bjontegaard_tables(M.(set_name), codecs, codec_names, metric, MaxBPP);
+    [BD_rateT, BD_snrT] = get_bjontegaard_tables(M.(set_name), plot_codecs, codec_names, metric, MaxBPP);
     [no_rows, no_cols] = size(BD_rateT);
-    charv = char('A' + no_cols - 1);
-    rowNum = ((cd-1)*no_rows)+1;
-    colNum = no_cols+1;
-    Range = sprintf("B%d:%c%d",rowNum, charv,colNum);
+    C1 = 'A';
+    R1 = ((cd-1)*(no_rows+3))+2;
+    C2 = char('A' + no_cols +1);
+    R2 = R1 + no_rows+2;
+    Title_Range = sprintf("%c%d", C1, R1-1);
+    writematrix(metric, xls_filename, 'Sheet',bd_rate_sheet, 'Range', Title_Range);
+    writematrix(metric, xls_filename, 'Sheet',bd_quality_sheet, 'Range', Title_Range);
+    Range = sprintf("%c%d:%c%d",C1, R1, C2,R2);
     writetable(BD_rateT, xls_filename, 'Sheet',bd_rate_sheet, 'Range',Range, 'WriteVariableNames',true,'WriteRowNames',true);
     writetable(BD_snrT, xls_filename, 'Sheet',bd_quality_sheet, 'Range',Range, 'WriteVariableNames',true,'WriteRowNames',true);
     % file_name = fullfile(set_table_folder, sprintf("BD_Rate_%s.txt", metric));

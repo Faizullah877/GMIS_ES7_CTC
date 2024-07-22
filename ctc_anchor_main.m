@@ -10,10 +10,10 @@ diary on
 
 %% Set Experiment parameters
 exp_params = struct();
-exp_params.set_name = "EPFL_Set2";
-exp_params.images_files_ext = "*.png"; % * must be provided.  
-exp_params.set_path = fullfile("D:\GMIS_DataSet\MultiExposure", exp_params.set_name); 
-exp_params.experiment_folder = "D:\GMIS_EXPs\MutliExposure";
+exp_params.set_name = "GolfClubHead_CityScape_10thF";
+exp_params.images_files_ext = "*.tiff"; % * must be provided.  
+exp_params.set_path = fullfile("D:\GMIS_DataSet\MutliFocusV2", exp_params.set_name); 
+exp_params.experiment_folder = "D:\GMIS_EXPs\Evaluate_10Fv2";
 exp_params.results_mat_fname = 'Metrics.mat';
 exp_params.QA_Metrics = ["PSNR_Y", "PSNR_YUV", "PSNR_HVS_M_Y", "MSSSIM_Y"];
 
@@ -23,28 +23,28 @@ exp_params.QA_Metrics = ["PSNR_Y", "PSNR_YUV", "PSNR_HVS_M_Y", "MSSSIM_Y"];
 % 3rd cell = Raw File format for Anchor, a directory with the cell value will be created in [experiment_folder/set_folder/ground_truth] folder
 % 4th cell = Is Raw in required format exists or not. if not then the software will generate with same name as 3 cell inside the experiment_folder/set_name/GroundTruth/3Parameter. 
 exp_params.Anchors_parameters = {... 
-    % {'SJU_Arch_DPCM_PIXELSv2', [5, 10, 20, 40, 60, 75, 85, 90], "PPM", true}...}
-    % {'SJU_Arch_JPEG2000v2', [5, 10, 20, 40, 60, 75, 85, 90], "PPM", true}... %[10, 25, 50, 75, 90, 95, 5, 93]
-    % {'SJU_Arch_JPEG_XLv2', [5, 10, 20, 40, 60, 75, 85, 90], "PPM", true}... %[10, 25, 50, 75, 90, 95, 5, 93]
-    % {'JPEG_AI_VM', [012, 025, 050, 075, 100], "PNG", true}...
-    % {'SJU_Arch_JPEG_AI', [012, 025, 050, 075, 100], "PNG", true}...
-    % {'SJU_Arch_JPEG1_DPCMPIXELS_RDOPT', [0.15, 0.30, 0.50, 0.8, 1.0], "PPM", true, 5} ...
-    % {'JPEG1', [7, 20, 40, 60, 80, 85, 90, 92, 95], "PPM", false}... %[7, 20, 40, 60, 80, 85]
-    % {'JPEG1_Arithmetic', [7, 20, 40, 60, 80, 85, 90, 92, 95], "PPM", true}... %[7, 20, 40, 60, 80, 85]
-    % {'JPEG2000', [7, 20, 40, 60, 80, 85, 90, 92, 95], "PPM", true}... %[7, 20, 40, 60, 80, 85]
-    % {'JPEGXL', [7, 20, 40, 60, 80, 85, 90, 92, 95], "PPM", true}... %[10, 30, 50, 70, 85, 90]
-    % {'VVC_VTM_Intra', [50, 45, 40, 35, 30, 25, 20, 16, 12, 10], "yuv420p10le", false}... % [50, 35, 25, 20, 15, 13, 11, 9]
-    % {'VVC_VVenC_Inter', [50, 35, 30, 25, 20, 15, 10], "yuv420p10le", true}... % [50, 35, 30, 25, 20, 15, 10, 5]
-    {'SJU_Arch_DPCM_PIXELSv2', [5, 10, 20, 40, 60, 75, 85, 90], "PPM", true}...}
-    {'SJU_Arch_JPEG2000v2', [5, 10, 20, 40, 60, 75, 85, 90], "PPM", true}... %[10, 25, 50, 75, 90, 95, 5, 93]
-    {'SJU_Arch_JPEG_XLv2', [5, 10, 20, 40, 60, 75, 85, 90], "PPM", true}... %[10, 25, 50, 75, 90, 95, 5, 93]
-    % {'VVC_VVenC_Inter_1_thread', [50, 35, 30, 25], "yuv420p10le", false}... %[50, 35, 30, 25, 20, 15, 10, 5],
-    % {'VVC_VVenC_Inter_8_thread', [50, 35, 30, 25], "yuv420p10le", true}... %[50, 35, 30, 25, 20, 15, 10, 5],
-    % {'VVC_VVenC_Intra', [50, 35, 30, 25, 20, 15, 10], "yuv420p10le", true}... % [50, 35, 30, 25, 20, 15, 10, 5]
-    % {'VVC_VTM_Inter', [50, 35, 25, 20, 15, 12, 10, 8], "yuv420p10le", true}... % [50, 35, 25, 20, 15, 12, 10, 8]
+    % {'JPEG_AI',                           [012, 025, 050, 075, 100],          "PNG", true}...
+    {'SJU_Arch_JPEG_AI',                  [012, 025, 050, 075, 100],          "PNG", true}...
+    % {'SJU_Arch_JPEG1_DPCMPIXELS_RDOPT',   [0.15, 0.30, 0.50, 0.8, 1.0],       "PPM", true, 5} ...
+    % {'JPEG1',                             [7, 20, 40, 60, 80, 85, 90, 92, 95], "PPM", false}... %[7, 20, 40, 60, 80, 85]
+    % {'JPEG1_Arithmetic',                  [7, 20, 40, 60, 80, 85, 90, 92, 95], "PPM", true}... %[7, 20, 40, 60, 80, 85]
+    % {'JPEG2000',                          [7, 20, 40, 60, 80, 85, 90, 92, 95], "PPM", true}... %[7, 20, 40, 60, 80, 85]
+    % {'JPEGXL',                            [7, 20, 40, 60, 80, 85, 90, 92, 95], "PPM", true}... %[10, 30, 50, 70, 85, 90]
+    % {'SJU_Arch_DPCM_QDCT',                [5, 10, 25, 50, 75, 80, 85, 90, 95], "JPEG-YCbCr", false}... %[10, 30, 50, 70, 85]
+    % {'SJU_Arch_DPCM_PIXELSv2',            [5, 10, 20, 40, 60, 75, 85, 90],    "PPM", true}...}
+    % {'SJU_Arch_JPEG2000v2',               [5, 10, 20, 40, 60, 75, 85, 90],    "PPM", true}... %[10, 25, 50, 75, 90, 95, 5, 93]
+    % {'SJU_Arch_JPEG_XLv2',                [5, 10, 20, 40, 60, 75, 85, 90],    "PPM", true}... %[10, 25, 50, 75, 90, 95, 5, 93]
+    % {'VVC_VTM_Intra',                     [50,  40, 32, 25, 20, 16],          "yuv420p10le_images", false}... % [50, 35, 25, 20, 15, 13, 11, 9]
+    % {'VVC_VVenC_Inter',                   [50, 35, 30, 25, 20, 15, 10],       "yuv420p10le_video", true}... % [50, 35, 30, 25, 20, 15, 10, 5]
+    % {'SJU_Arch_DPCM_PIXELSv2',            [5, 10, 20, 40, 60, 75, 85, 90],    "PPM", true}...}
+    % {'SJU_Arch_JPEG2000v2',               [5, 10, 20, 40, 60, 75, 85, 90],    "PPM", true}... %[10, 25, 50, 75, 90, 95, 5, 93]
+    % {'SJU_Arch_JPEG_XLv2',                [5, 10, 20, 40, 60, 75, 85, 90],    "PPM", true}... %[10, 25, 50, 75, 90, 95, 5, 93]
+    % {'VVC_VVenC_Inter_1_thread',          [50, 35, 30, 25],                   "yuv420p10le",    false}... %[50, 35, 30, 25, 20, 15, 10, 5],
+    % {'VVC_VVenC_Inter_8_thread',          [50, 35, 30, 25],                   "yuv420p10le", true}... %[50, 35, 30, 25, 20, 15, 10, 5],
+    % {'VVC_VVenC_Intra',                   [50, 35, 30, 25, 20, 15, 10],       "yuv420p10le_images", false}... % [50, 35, 30, 25, 20, 15, 10, 5]
+    % {'VVC_VTM_Inter',                       [50, 35, 25, 20, 15, 12, 10, 8],    "yuv420p10le_video", false}... % [50, 35, 25, 20, 15, 12, 10, 8]
     % {'H264_AVC', [25, 30, 35], "PPM", true}...
     % {'H264_AVCintra', [25, 30, 35], "PPM", true}...
-    % {'SJU_Arch_DPCM_QDCT', [10, 25, 50, 75, 90, 95, 5, 18, 40, 70, 80, 85], "JPEG-YCbCr", true}... %[10, 30, 50, 70, 85]
     % {'SJU_Arch_DPCM_PIXELS', [10, 25, 50, 75, 90, 95, 5, 18, 40, 70, 80, 85], "JPEG-YCbCr", true}...}
     };
 
@@ -71,8 +71,7 @@ else
     load(fullfile(exp_params.dir_struct.set_data_folder, 'dataset_info.mat'));
 end
 exp_params.set_info = dataset_info;
-
-
+M.set_info = dataset_info;
 %% loop through each anchor
 no_of_anchors = numel(exp_params.Anchors_parameters);
 

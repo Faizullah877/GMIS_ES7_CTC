@@ -3,6 +3,7 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
     %   Detailed explanation goes here
 
     %general parameters
+    set_info = exp_params.set_info;
     set_name = exp_params.set_name;
     QA_metrics = exp_params.QA_Metrics;
     do_discard = exp_params.do_discard;   
@@ -13,7 +14,7 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
     no_of_QAmetrics = numel(QA_metrics);    
     quality_count = numel(q_list);
     dir_struct = exp_params.dir_struct;  
-    no_of_images = exp_params.set_info.no_of_images;    
+    no_of_images = set_info.no_of_images;    
     set_codec_results = struct();
 
     % codec data folder
@@ -36,7 +37,7 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
     for q_itr = 1: quality_count
         q_v = q_list(q_itr);
         q_fieldName = ['q_' num2str(q_v)];
-        q_fieldName = strrep(q_fieldName, ".", "p");
+        q_fieldName = strrep(q_fieldName, ".", "p"); % replace dot with char 'p' in case of floating point q values. 
 
         % check and skip if the data for the q value is already there.
         if isfield(M, set_name)
@@ -58,8 +59,6 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
         if(~exist(set_dec_folder, 'dir')), mkdir(set_dec_folder); end
 
         % necessary variables for codec and results
-        no_rows = exp_params.set_info.images_details.img_height(1);
-        no_cols = exp_params.set_info.images_details.img_width(1);
         ImagesResult_T1 = table('Size', [no_of_images 8], 'VariableTypes', {'uint16', 'string','uint16', 'uint16', 'double', 'single', 'double','double'});
         ImagesResult_T1.Properties.VariableNames = {'ImageNo','ImageName', 'ImageWidth', 'ImageHeight', 'CompressedImageSize','bpp', 'enc_time', 'dec_time'};    
         Images_IQA_T = double(zeros([no_of_images no_of_QAmetrics])); 
@@ -77,12 +76,10 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
         input.compressed_folder = set_compressed_folder;
         input.decompressed_folder = set_dec_folder;
         input.q_value = q_v;
-        input.width = exp_params.set_info.images_details.img_width(1);
-        input.height = exp_params.set_info.images_details.img_height(1);
-        input.no_of_images = no_of_images;
+        input.set_info = set_info;
     
         fprintf("\tStart Time: %s.\n", get_current_time_str());
-        fprintf("\tCompression Pipeline running for SET : [%s {%dx%dx%d}]   CODEC : [%s] and RATE : [%3.2f] => %d/%d\n",set_name,no_cols, no_rows, no_of_images, codec, q_v, q_itr, quality_count);
+        fprintf("\tCompression Pipeline running for SET : [%s {No. Images = %d}]   CODEC : [%s] and RATE : [%3.2f] => %d/%d\n",set_name,no_of_images, codec, q_v, q_itr, quality_count);
     
     
         q_start_time = tic();
@@ -127,7 +124,7 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
             codec_report = encode_decode_VVC_VTM(input);
         elseif strcmp(codec, "SJU_Arch_DPCM_QDCT")
             input.encoding_scheme = "jpeg1_dpcm_qdct_seq";
-            codec_report = encode_decode_SJU_ARCH(input);
+            codec_report = encode_decode_DPCM_QDCT(input);
             % codec_report = encode_decode_DPCM_QDCT(input);
         elseif strcmp(codec, "SJU_Arch_DPCM_PIXELSv2")
             input.config = "arith";
@@ -140,9 +137,9 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
             input.codec = "JPEG1";
             input.intra_refresh_rate = codec_params{5};
             codec_report = encode_decode_SJU_ARCH_JPEG1_RDOPT(input);
-        elseif strcmp(codec, "JPEG_AI_VM")
+        elseif strcmp(codec, "JPEG_AI")
             input.data_folder = codec_data_folder;
-            codec_report = organize_and_get_report_JPEG_AI_VM(input);
+            codec_report = organize_and_get_report_JPEG_AI(input);
         elseif strcmp(codec, "SJU_Arch_JPEG_AI")
             input.data_folder = codec_data_folder;
             codec_report = organize_and_get_report_SJU_Arch_JPEG_AI(input);
@@ -160,25 +157,29 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
         codec_time = toc(q_start_time);
     
         fprintf('\t\t=> Set Compressed and Decompressed in %f sec.\n', codec_time);
-    
+        set_bpp = (codec_report.compressed_set_size*8) / set_info.num_pixels;
         eval_set_start_time = tic;
         textprogressbar('        => Evaluating : ');
         for imgNo=1:no_of_images
-            input_raw = fullfile(exp_params.set_info.set_path, exp_params.set_info.images_details.img_names(imgNo));
+            image_name_wo_ext = set_info.images_details.NameWoExt(imgNo);
+            image_name_wd_ext = set_info.images_details.NameWdExt(imgNo);
+            input_raw = fullfile(exp_params.set_info.set_path, image_name_wd_ext);
             Orig_IMG = imread(input_raw);
             [no_rows, no_cols, ~] = size(Orig_IMG);
-            [~, image_name, ~] = fileparts(input_raw);
-            decoded_ppm_file = fullfile(codec_report.set_dec_folder, sprintf('dec_image_%03d.ppm', imgNo));
+            decoded_ppm_file = fullfile(set_dec_folder, sprintf('%s.ppm', image_name_wo_ext));
+            if strcmp(codec, "SJU_Arch_DPCM_QDCT")
+                decoded_ppm_file = fullfile(set_dec_folder, sprintf('dec_image_%03d.ppm', imgNo));
+            end
             dec_file_exists = isfile(decoded_ppm_file);
             if dec_file_exists
                 Recon_IMG = imread(decoded_ppm_file);
                 image_IQA_values = evaluate_images_IQA(Orig_IMG, Recon_IMG, QA_metrics);
                 if ~isfield(codec_report, "images_result_table")
-                    compressed_img_size = codec_report.compressed_file_size/no_of_images;
-                    img_bpp = codec_report.set_bpp;
+                    compressed_img_size = codec_report.compressed_set_size/no_of_images;
+                    img_bpp = set_bpp;
                     img_enc_time = codec_report.set_enc_time/no_of_images;
                     img_dec_time = codec_report.set_dec_time/no_of_images;
-                    ImagesResult_T1(imgNo,:) ={imgNo, image_name, no_cols, no_rows, compressed_img_size, img_bpp, img_enc_time, img_dec_time};
+                    ImagesResult_T1(imgNo,:) ={imgNo, image_name_wo_ext, no_cols, no_rows, compressed_img_size, img_bpp, img_enc_time, img_dec_time};
                 end
                 tmp = struct2cell(image_IQA_values);
                 v = [tmp{:}];
@@ -216,7 +217,7 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
         else
             qp_no = q_itr;
         end
-        set_avg_results(qp_no, :) = {q_v, codec_report.compressed_file_size, codec_report.set_bpp, codec_report.set_enc_time, codec_report.set_dec_time, ...
+        set_avg_results(qp_no, :) = {q_v, codec_report.compressed_set_size, set_bpp, codec_report.set_enc_time, codec_report.set_dec_time, ...
             mean(images_results_table.(QA_metrics(1))), ...
             mean(images_results_table.(QA_metrics(2))), ...
             mean(images_results_table.(QA_metrics(3))), ...
@@ -227,7 +228,7 @@ function M = compression_pipeline_v2(exp_params, codec_params, M)
     
         M.(set_name).(codec).SET_AVG_RESULTS = sortrows(set_avg_results, "SET_BPP");
         M.(set_name).(codec).RATE_VALUES = q_list;
-        M.(set_name).(codec).IMAGES_NAMES = exp_params.set_info.images_details.img_names;
+        M.(set_name).(codec).IMAGES_NAMES = exp_params.set_info.images_details.NameWoExt;
     
         save(fullfile(exp_params.dir_struct.results_folders, exp_params.results_mat_fname), 'M');
     

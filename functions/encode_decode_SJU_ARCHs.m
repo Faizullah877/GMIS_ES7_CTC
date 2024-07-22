@@ -1,8 +1,13 @@
 function report = encode_decode_SJU_ARCHs(input)
 report = struct();
-no_of_images = input.no_of_images;
-no_cols = input.width;
-no_rows = input.height;
+set_info = input.set_info;
+no_of_images = set_info.no_of_images;
+set_name = set_info.set_name;
+if ~set_info.same_resolution
+    fprintf("The codec {gmis.exe} does not support sets {%s} with images having different resolution.", set_name);
+    error("Compression Failed");
+end
+
 codec = input.codec;
 config="";
 if strcmp(codec, "JPEG2000")
@@ -19,18 +24,22 @@ end
 
 intra_frame = 10;
 
-brotli_exe = fullfile(input.codec_folder, "JPEG_XL\brotli.exe");
-raw_files = dir(fullfile(input.input_raw, "*.ppm"));
+no_rows = set_info.images_details.ImageHeight(1);
+no_cols = set_info.images_details.ImageWidth(1);
 
-ImagesResult_T1 = table('Size', [no_of_images 8], 'VariableTypes', {'uint16', 'string','uint16', 'uint16', 'double', 'single', 'double','double'});
-ImagesResult_T1.Properties.VariableNames = {'ImageNo','ImageName', 'ImageWidth', 'ImageHeight', 'CompressedImageSize','bpp', 'enc_time', 'dec_time'};
+brotli_exe = fullfile(input.codec_folder, "JPEG_XL\brotli.exe");
+
+ImagesResult = table('Size', [no_of_images 8], 'VariableTypes', {'uint16', 'string','uint16', 'uint16', 'double', 'single', 'double','double'});
+ImagesResult.Properties.VariableNames = {'ImageNo','ImageName', 'ImageWidth', 'ImageHeight', 'CompressedImageSize','bpp', 'enc_time', 'dec_time'};
 q_v = input.q_value;
 
 tmp_folder = fullfile(input.set_q_folder, "tmp");
 if(~exist(tmp_folder, 'dir')), mkdir(tmp_folder); end
 
 %% Mother Image
-mother_image_file = fullfile(input.input_raw, raw_files(1).name);
+
+image_name_wo_ext = set_info.images_details.NameWoExt(1);
+mother_image_file = fullfile(input.input_raw, sprintf("%s.ppm", image_name_wo_ext));
 [~, image_name, ~] = fileparts(mother_image_file);
 %encoding
 [command, mother_image_compressed_file] = get_encoding_command(codec, encoder_exe, mother_image_file, input.compressed_folder, image_name, q_v, config);
@@ -43,7 +52,7 @@ if(status)
     error('compression failed');
 end
 % decoding
-decoded_image_ppm = fullfile(input.decompressed_folder, sprintf("dec_image_%03d.ppm", 1));
+decoded_image_ppm = fullfile(input.decompressed_folder, sprintf("%s.ppm", image_name_wo_ext));
 dec_cmd = get_decoding_command(codec, decoder_exe, mother_image_compressed_file, decoded_image_ppm);
 tDstartimg = tic;
 [status, out] = system(dec_cmd);
@@ -57,22 +66,23 @@ end
 % get bpp and encoding time
 compressed_file_info=dir(mother_image_compressed_file);
 compressed_img_size = compressed_file_info.bytes;
-img_bpp = (compressed_img_size*8) / (no_cols*no_rows);
-ImagesResult_T1(1,:) ={1, image_name, no_cols, no_rows, compressed_img_size, img_bpp, img_enc_time, img_dec_time};
+img_bpp = (compressed_img_size*8) / (double(no_cols)*double(no_rows));
+ImagesResult(1,:) ={1, image_name_wo_ext, no_cols, no_rows, compressed_img_size, img_bpp, img_enc_time, img_dec_time};
 
-Orig_IMG = imread(mother_image_file);
+% Orig_IMG = imread(mother_image_file);
 decoded_mother_img = imread(decoded_image_ppm);
-psnrv = psnr(uint8(decoded_mother_img), Orig_IMG);
-fprintf("%s  => BPP   %f  => PSNR = %f\n", image_name, img_bpp, psnrv);
+% psnrv = psnr(uint8(decoded_mother_img), Orig_IMG);
+% fprintf("%s  => BPP   %f  => PSNR = %f\n", image_name, img_bpp, psnrv);
 previous_image = int16(decoded_mother_img);
 
 %% Child Images.
 for imgNo = 2: no_of_images
-
-    input_raw = fullfile(input.input_raw, raw_files(imgNo).name);
+    image_name_wo_ext = set_info.images_details.NameWoExt(imgNo);
+    no_rows = set_info.images_details.ImageHeight(imgNo);
+    no_cols = set_info.images_details.ImageWidth(imgNo);
+    input_raw = fullfile(input.input_raw, sprintf("%s.ppm", image_name_wo_ext));
     Orig_IMG = imread(input_raw);
-    [no_rows, no_cols, ~] = size(Orig_IMG);
-    [~, image_name, ~] = fileparts(input_raw);
+    image_name = image_name_wo_ext;
     br1_bytes = 0;
     br2_bytes = 0;
     if mod(imgNo, intra_frame) == 0  % intra refresh rate
@@ -122,7 +132,7 @@ for imgNo = 2: no_of_images
     % decoding
 
     if mod(imgNo, intra_frame) == 0 
-        decoded_residue_image_ppm = fullfile(input.decompressed_folder, sprintf("dec_image_%03d.ppm", imgNo));
+        decoded_residue_image_ppm = fullfile(input.decompressed_folder, sprintf("%s.ppm", image_name_wo_ext));
     else
         decoded_residue_image_ppm = fullfile(tmp_folder, sprintf("dec_image_%03d.ppm", imgNo));
     end
@@ -162,30 +172,30 @@ for imgNo = 2: no_of_images
         rec_idx2 = load(rec_idx2_tmp_file);
         rec_idx2 = rec_idx2.idx2;
         rec_next_image = sju_residue_dpcm_pixels_inverse(previous_image, int16(recon_residue), rec_idx1, rec_idx2);
-        decoded_image_file = fullfile(input.decompressed_folder, sprintf("dec_image_%03d.ppm", imgNo));
+        decoded_image_file = fullfile(input.decompressed_folder, sprintf("%s.ppm", image_name_wo_ext));
         imwrite(uint8(rec_next_image), decoded_image_file);
     end
 
-    psnrv = psnr(uint8(rec_next_image), Orig_IMG);
+    % psnrv = psnr(uint8(rec_next_image), Orig_IMG);
     previous_image = int16(rec_next_image);
 
     % get bpp and encoding time
     compressed_file_info=dir(compressed_file);
     compressed_img_size = compressed_file_info.bytes + br1_bytes + br2_bytes;
-    img_bpp = (compressed_img_size*8) / (no_cols*no_rows);
+    img_bpp = (compressed_img_size*8) / (double(no_cols)*double(no_rows));
 
-    fprintf("%s  => BPP   %f  => PSNR = %f\n", image_name, img_bpp, psnrv);
-    ImagesResult_T1(imgNo,:) ={imgNo, image_name, no_cols, no_rows, compressed_img_size, img_bpp, img_enc_time, img_dec_time};
+    % fprintf("%s  => BPP   %f  => PSNR = %f\n", image_name, img_bpp, psnrv);
+    ImagesResult(imgNo,:) ={imgNo, image_name, no_cols, no_rows, compressed_img_size, img_bpp, img_enc_time, img_dec_time};
 end
 
 
-report.set_enc_time = sum(ImagesResult_T1.("enc_time"));
-compressed_set_size = sum(ImagesResult_T1.("CompressedImageSize"));
-report.compressed_file_size = compressed_set_size;
-report.set_bpp = (compressed_set_size*8) / (input.width*input.height*no_of_images);
-report.set_dec_time = sum(ImagesResult_T1.("dec_time"));
+report.set_enc_time = sum(ImagesResult.("enc_time"));
+compressed_set_size = sum(ImagesResult.("CompressedImageSize"));
+report.compressed_set_size = compressed_set_size;
+report.set_bpp = (compressed_set_size*8) / double(set_info.num_pixels);
+report.set_dec_time = sum(ImagesResult.("dec_time"));
 report.set_dec_folder = input.decompressed_folder;
-report.images_result_table = ImagesResult_T1;
+report.images_result_table = ImagesResult;
 
 end
 
