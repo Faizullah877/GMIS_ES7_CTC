@@ -1,0 +1,10 @@
+	Start Time: 09-Jul-2024 23:58:32.
+	Compression Pipeline running for SET : [AC_Kid_kickboard1_Crop {No. Images = 6}]   CODEC : [VVC_VTM_Intra] and RATE : [50.00] => 1/10
+input_yuv_image
+
+input_yuv_image = 
+
+    "D:\GMIS_EXPs\Diff_Resolution\AC_Kid_kickboard1_Crop\GroundTruth\yuv420p10le_images\crop1_image006_1008x756_1Hz_prec10_P444.yuv"
+
+if system_dependent('IsDebugMode')==1, dbquit; end
+ctc_anchor_main

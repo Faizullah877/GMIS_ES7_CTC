@@ -1,0 +1,12 @@
+	Start Time: 09-Jul-2024 23:57:57.
+	Compression Pipeline running for SET : [AC_Kid_kickboard1_Crop {No. Images = 6}]   CODEC : [VVC_VTM_Intra] and RATE : [50.00] => 1/10
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('encode_decode_VVC_VTM')" style="font-weight:bold">encode_decode_VVC_VTM</a>
+Input File does not exists
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('compression_pipeline_v2', 'D:\GMIS_ES_7\functions\compression_pipeline_v2.m', 123)" style="font-weight:bold">compression_pipeline_v2</a> (<a href="matlab: opentoline('D:\GMIS_ES_7\functions\compression_pipeline_v2.m',123,0)">line 123</a>)
+            codec_report = encode_decode_VVC_VTM(input);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ctc_anchor_main', 'D:\GMIS_ES_7\ctc_anchor_main.m', 87)" style="font-weight:bold">ctc_anchor_main</a> (<a href="matlab: opentoline('D:\GMIS_ES_7\ctc_anchor_main.m',87,0)">line 87</a>)
+    M = compression_pipeline_v2(exp_params, anch_P, M);
+} 
+ctc_anchor_main

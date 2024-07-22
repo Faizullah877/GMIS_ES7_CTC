@@ -1,0 +1,14 @@
+	Start Time: 09-Jul-2024 23:59:18.
+	Compression Pipeline running for SET : [AC_Kid_kickboard1_Crop {No. Images = 6}]   CODEC : [VVC_VTM_Intra] and RATE : [50.00] => 1/10
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbstep; end
+if system_dependent('IsDebugMode')==1, dbcont; end
+outE
+
+outE =
+
+    'The system cannot find the path specified.
+     '
+
+if system_dependent('IsDebugMode')==1, dbquit; end
+ctc_anchor_main
