@@ -2,7 +2,7 @@ clc
 clear all
 
 addpath(genpath('./bjontegaard'));
-M_File_Path = "D:\GMIS_ES7_Results\HoloPC_Results";
+M_File_Path = "D:\GMIS_EXPs\MultiExposure_v1\Results";
 
 M_file = fullfile(M_File_Path, "Metrics.mat");
 plot_all_codecs = false;
@@ -11,7 +11,7 @@ tables_folder = fullfile(M_File_Path, "BD_Tables");
 if(~exist(tables_folder, 'dir')), mkdir(tables_folder); end
 
 load(M_file);
-set_name = "PlantPot_Stones";
+set_name = "Set_507";
 
 set_results_present = isfield(M, set_name);
 if(set_results_present ~= 1)
@@ -19,7 +19,7 @@ if(set_results_present ~= 1)
     return;
 end
 
-MaxBPP = 1.0; 
+MaxBPP = 8.0; 
 
 % set_table_folder = fullfile(tables_folder, set_name);
 % if(~exist(set_table_folder, 'dir')), mkdir(set_table_folder); end
@@ -30,7 +30,11 @@ metrices = [ "PSNR_Y", "PSNR_YUV", "PSNR_HVS_M_Y", "MSSSIM_Y"];
 if(plot_all_codecs)
     plot_codecs = string(fieldnames(M.(set_name)));
 else
-    plot_codecs = ["JPEG1", "JPEG1_Arithmetic", "SJU_Arch_DPCM_PIXELSv2", "JPEG2000", "SJU_Arch_JPEG2000v2", "JPEGXL", "SJU_Arch_JPEG_XLv2", "JPEG_AI_VM", "SJU_Arch_JPEG_AI"];  
+     plot_codecs = ["JPEG1", "JPEG1_Arithmetic", "SJU_Arch_DPCM_QDCT", "SJU_Arch_DPCM_PIXELSv2", "JPEG2000", "SJU_Arch_JPEG2000v2", "JPEGXL", "SJU_Arch_JPEG_XLv2", "JPEG_AI", "SJU_Arch_JPEG_AI"];
+    
+    % plot_codecs = ["JPEG1", "JPEG1_Arithmetic", "SJU_Arch_DPCM_QDCT", "SJU_Arch_DPCM_PIXELSv2", "JPEG2000", "SJU_Arch_JPEG2000v2", "JPEGXL", "SJU_Arch_JPEG_XLv2"];
+    
+    % plot_codecs = ["JPEG1", "JPEG1_Arithmetic", "SJU_Arch_DPCM_PIXELSv2", "JPEG2000", "SJU_Arch_JPEG2000v2", "JPEGXL", "SJU_Arch_JPEG_XLv2", "JPEG_AI_VM", "SJU_Arch_JPEG_AI"];  
     % plot_codecs = ["JPEG1", "JPEG1_Arithmetic", "JPEG2000"];
     % codecs = ["JPEG1", "JPEG1_Arithmetic", "JPEG2000", "JPEGXL", "VVC_VVenC_Inter", "VVC_VTM_Intra", "SJU_Arch_DPCM_PIXELSv2", "SJU_Arch_JPEG2000v2", "SJU_Arch_JPEG_XLv2", "JPEG_AI_VM", "SJU_Arch_JPEG_AI"];
     % plot_codecs = ["JPEG1", "JPEG1_Arithmetic", "JPEG2000", "JPEGXL", "VVC_VVenC_Inter", "VVC_VTM_Intra", "SJU_Arch_DPCM_QDCT", "SJU_Arch_JPEG2000v1", "SJU_Arch_JPEG_XLv1", "SJU_Arch_DPCM_PIXELSv2", "SJU_Arch_JPEG2000v2", "SJU_Arch_JPEG_XLv2", "JPEG_AI_VM"];
@@ -52,13 +56,13 @@ codec_names = { ...
     {"VVC_VTM_Inter"         ,  "VVC inter"            } ...
     {"VVC_VTM_Intra"         ,  "VVC intra"            } ...
     {"SJU_Arch_DPCM_PIXELSv1",  "SJU-Arch JPEG 1"      } ...
-    {"SJU_Arch_DPCM_PIXELSv2",  "SJU-Arch JPEG 1"      } ...
-    {"SJU_Arch_DPCM_QDCT"    ,  "SJU-Arch JPEG 1"      } ...
+    {"SJU_Arch_DPCM_PIXELSv2",  "SJU-Arch JPEG 1 DPCM-PIXELS"      } ...
+    {"SJU_Arch_DPCM_QDCT"    ,  "SJU-Arch JPEG 1 DPCM-QDCT"      } ...
     {"SJU_Arch_JPEG2000v1"   ,  "SJU-Arch JPEG 2000"   } ...
     {"SJU_Arch_JPEG2000v2"   ,  "SJU-Arch JPEG 2000"   } ...
     {"SJU_Arch_JPEG_XLv1"    ,  "SJU-Arch JPEG XL"     } ...
     {"SJU_Arch_JPEG_XLv2"    ,  "SJU-Arch JPEG XL"     } ...
-    {"JPEG_AI_VM"            ,  "JPEG AI"              } ...
+    {"JPEG_AI"            ,  "JPEG AI"              } ...
     {"SJU_Arch_JPEG_AI"      ,  "SJU-Arch JPEG AI"     } ...
     {"SJU_Arch_JPEG1_DPCMPIXELS_RDOPT",  "SJU-Arch JPEG1 Rdopt"}
     };
